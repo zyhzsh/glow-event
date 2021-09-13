@@ -1,108 +1,144 @@
-import 'package:flutter/material.dart';
-import 'package:location/location.dart';
+import 'dart:async';
 
-void main() {
-  runApp(MyApp());
+import 'package:flutter/material.dart';
+import 'package:poly_geofence_service/poly_geofence_service.dart';
+
+void main() => runApp(ExampleApp());
+
+class ExampleApp extends StatefulWidget {
+  @override
+  _ExampleAppState createState() => _ExampleAppState();
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class _ExampleAppState extends State<ExampleApp> {
+  final _streamController = StreamController<PolyGeofence>();
+
+  // Create a [PolyGeofenceService] instance and set options.
+  final _polyGeofenceService = PolyGeofenceService.instance.setup(
+      interval: 5000, // Time interval to check geofence status
+      accuracy: 100, // geofencing error range in meters
+      loiteringDelayMs: 60000,
+      statusChangeDelayMs: 10000,
+      allowMockLocations: false,
+      printDevLog: false);
+
+  // Create a [PolyGeofence] list.
+  final _polyGeofenceList = <PolyGeofence>[
+    PolyGeofence(
+      id: 'Ketelplein',
+      data: {},
+      polygon: <LatLng>[
+        const LatLng(51.44711773807286, 5.45592148455019),
+        const LatLng(51.448455039354585, 5.457133843024922),
+        const LatLng(51.44656274654101, 5.459655119498921),
+        const LatLng(51.44603449532325, 5.45917232187624),
+        const LatLng(51.44711105146802, 5.455910755714131),
+      ],
+    ),
+  ];
+
+  // This function is to be called when the geofence status is changed.
+  Future<void> _onPolyGeofenceStatusChanged(PolyGeofence polyGeofence,
+      PolyGeofenceStatus polyGeofenceStatus, Location location) async {
+    //print('polyGeofence: ${polyGeofence.toJson()}');
+    print('polyGeofenceStatus: ${polyGeofenceStatus.toString()}');
+    _streamController.sink.add(polyGeofence);
+  }
+
+  // This function is to be called when the location has changed.
+  void _onLocationChanged(Location location) {
+    //print('location: ${location.toJson()}');
+  }
+
+  // This function is to be called when a location services status change occurs
+  // since the service was started.
+  void _onLocationServicesStatusChanged(bool status) {
+    print('isLocationServicesEnabled: $status');
+  }
+
+  // This function is used to handle errors that occur in the service.
+  void _onError(error) {
+    final errorCode = getErrorCodesFromError(error);
+    if (errorCode == null) {
+      print('Undefined error: $error');
+      return;
+    }
+
+    print('ErrorCode: $errorCode');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      _polyGeofenceService
+          .addPolyGeofenceStatusChangeListener(_onPolyGeofenceStatusChanged);
+      _polyGeofenceService.addLocationChangeListener(_onLocationChanged);
+      _polyGeofenceService.addLocationServicesStatusChangeListener(
+          _onLocationServicesStatusChanged);
+      _polyGeofenceService.addStreamErrorListener(_onError);
+      _polyGeofenceService.start(_polyGeofenceList).catchError(_onError);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Glow 2021',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      // A widget used when you want to start a foreground task when trying to minimize or close the app.
+      // Declare on top of the [Scaffold] widget.
+      home: WillStartForegroundTask(
+        onWillStart: () {
+          // You can add a foreground task start condition.
+          return _polyGeofenceService.isRunningService;
+        },
+        androidNotificationOptions: AndroidNotificationOptions(
+          channelId: 'geofence_service_notification_channel',
+          channelName: 'Geofence Service Notification',
+          channelDescription:
+          'This notification appears when the geofence service is running in the background.',
+          channelImportance: NotificationChannelImportance.LOW,
+          priority: NotificationPriority.LOW,
+        ),
+        iosNotificationOptions:
+        IOSNotificationOptions(showNotification: true, playSound: true),
+        notificationTitle: 'Geofence Service is running',
+        notificationText: 'Tap to return to the app',
+        child: Scaffold(
+          backgroundColor: Colors.red,
+          appBar: AppBar(
+            title: const Text('Poly Geofence Service'),
+            centerTitle: true,
+          ),
+          body: _buildContentView(),
+        ),
       ),
-      home: MyHomePage(title: 'Welcome to Glow 2021'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  Location location = new Location();
-  late bool _serviceEnabled;
-  late PermissionStatus _permissionGranted;
-  late LocationData _locationData;
-  bool _isListenLocation = false, _isGetLocation=false;
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body:Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(onPressed: () async{
-                _serviceEnabled = await location.serviceEnabled();
-                if(!_serviceEnabled) {
-                  _serviceEnabled = await location.requestService();
-                  if(_serviceEnabled) return;
-                }
-
-                _permissionGranted = await location.hasPermission();
-                if(_permissionGranted == PermissionStatus.denied) {
-                  _permissionGranted = await location.requestPermission();
-                  if(_permissionGranted != PermissionStatus.granted) return;
-                }
-
-                _locationData = await location.getLocation();
-                setState(() {
-                  _isGetLocation = true;
-                });
-
-              }, child: Text('Get Location')),
-              _isGetLocation ? Text('Location: ${_locationData.latitude} / ${_locationData.longitude}') : Container(),
-              ElevatedButton(onPressed: () async {
-                _serviceEnabled = await location.serviceEnabled();
-                if(!_serviceEnabled) {
-                  _serviceEnabled = await location.requestService();
-                  if(_serviceEnabled) return;
-                }
-
-                _permissionGranted = await location.hasPermission();
-                if(_permissionGranted == PermissionStatus.denied) {
-                  _permissionGranted = await location.requestPermission();
-                  if(_permissionGranted != PermissionStatus.granted) return;
-                }
-                setState(() {
-                  _isListenLocation = true;
-                });
-              }, child: Text('Listen Location')),
-              StreamBuilder(
-                  stream: location.onLocationChanged,
-                  builder: (context,snapshot){
-                    if(snapshot.connectionState != ConnectionState.waiting)
-                    {
-                      var data = snapshot.data as LocationData;
-                      return Text('Location always change: \n ${data.latitude}/${data.longitude}');
-                    }
-                    else return Center(child: CircularProgressIndicator(),);
-                  })
-
-            ],
-          )
-      ),
-
     );
   }
 
-  //Implementing Geofencing
+  @override
+  void dispose() {
+    _streamController.close();
+    super.dispose();
+  }
 
+  Widget _buildContentView() {
+    return StreamBuilder<PolyGeofence>(
+      stream: _streamController.stream,
+      builder: (context, snapshot) {
+        final updatedDateTime = DateTime.now();
+
+        final content = snapshot.data?.toJson().toString() ?? '';
+
+        return ListView(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.all(8.0),
+          children: [
+            Text('•\t\tPolyGeofence (updated: $updatedDateTime)'),
+            SizedBox(height: 10.0),
+            Text(content),
+          ],
+        );
+      },
+    );
+  }
 }
