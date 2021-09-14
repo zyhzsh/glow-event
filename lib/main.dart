@@ -1,7 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poly_geofence_service/poly_geofence_service.dart';
+import 'package:rxdart/rxdart.dart';
+
+import 'bloc/geofence_bloc.dart';
 
 void main() => runApp(ExampleApp());
 
@@ -11,13 +15,15 @@ class ExampleApp extends StatefulWidget {
 }
 
 class _ExampleAppState extends State<ExampleApp> {
-  final _streamController = StreamController<PolyGeofence>();
+  //final _streamController = StreamController<PolyGeofence>();
+  StreamController<PolyGeofence> _streamController = BehaviorSubject();
+  GeofenceBloc _geofenceBloc = GeofenceBloc();
 
   // Create a [PolyGeofenceService] instance and set options.
   final _polyGeofenceService = PolyGeofenceService.instance.setup(
       interval: 5000, // Time interval to check geofence status
       accuracy: 100, // geofencing error range in meters
-      loiteringDelayMs: 60000,
+      loiteringDelayMs: 600000,
       statusChangeDelayMs: 10000,
       allowMockLocations: false,
       printDevLog: false);
@@ -41,8 +47,9 @@ class _ExampleAppState extends State<ExampleApp> {
   Future<void> _onPolyGeofenceStatusChanged(PolyGeofence polyGeofence,
       PolyGeofenceStatus polyGeofenceStatus, Location location) async {
     //print('polyGeofence: ${polyGeofence.toJson()}');
-    print('polyGeofenceStatus: ${polyGeofenceStatus.toString()}');
+    //print('polyGeofenceStatus: ${polyGeofenceStatus.toString()}');
     _streamController.sink.add(polyGeofence);
+    _geofenceBloc.add(UpdateGeofenceEvent(polyGeofence.status.toString()));
   }
 
   // This function is to be called when the location has changed.
@@ -78,9 +85,11 @@ class _ExampleAppState extends State<ExampleApp> {
           _onLocationServicesStatusChanged);
       _polyGeofenceService.addStreamErrorListener(_onError);
       _polyGeofenceService.start(_polyGeofenceList).catchError(_onError);
+
     });
   }
 
+  Color myColor = Colors.blueGrey;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -103,14 +112,23 @@ class _ExampleAppState extends State<ExampleApp> {
         IOSNotificationOptions(showNotification: true, playSound: true),
         notificationTitle: 'Geofence Service is running',
         notificationText: 'Tap to return to the app',
-        child: Scaffold(
-          backgroundColor: Colors.red,
-          appBar: AppBar(
-            title: const Text('Poly Geofence Service'),
-            centerTitle: true,
-          ),
-          body: _buildContentView(),
-        ),
+        child: BlocBuilder(
+          bloc: _geofenceBloc,
+          builder: (context,state) {
+              if(state is CurrentGeofence){
+              if( state.status == null)
+              {
+                return Scaffold();
+              }
+              else{
+                print(state.status == "ENTER");
+                print(state.status);
+                print(state.status.runtimeType);
+                  return Scaffold( backgroundColor: state.status == "PolyGeofenceStatus.ENTER"? Colors.green : Colors.red);}
+              }
+              else return Scaffold();
+          }
+        )
       ),
     );
   }
@@ -118,6 +136,7 @@ class _ExampleAppState extends State<ExampleApp> {
   @override
   void dispose() {
     _streamController.close();
+    _geofenceBloc.close();
     super.dispose();
   }
 
@@ -128,7 +147,16 @@ class _ExampleAppState extends State<ExampleApp> {
         final updatedDateTime = DateTime.now();
 
         final content = snapshot.data?.toJson().toString() ?? '';
+        if(snapshot.data?.status == PolyGeofenceStatus.ENTER){
+          setState(() {
+            myColor = Colors.green;
+          });
+        }else{
+          setState(() {
+            myColor = Colors.red;
+          });
 
+        }
         return ListView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.all(8.0),
