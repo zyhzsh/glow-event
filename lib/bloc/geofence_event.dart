@@ -4,6 +4,6 @@ part of 'geofence_bloc.dart';
 abstract class GeofenceEvent {}
 
 class UpdateGeofenceEvent extends GeofenceEvent {
-  final String status;
-  UpdateGeofenceEvent(this.status);
+  final String id;
+  UpdateGeofenceEvent(this.id);
 }

@@ -4,7 +4,7 @@ part of 'geofence_bloc.dart';
 abstract class GeofenceState {}
 
 class CurrentGeofence extends GeofenceState {
-  final String? status;
+  final String? id;
 
-  CurrentGeofence(this.status);
+  CurrentGeofence(this.id);
 }

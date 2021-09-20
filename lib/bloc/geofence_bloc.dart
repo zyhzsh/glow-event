@@ -8,8 +8,8 @@ part 'geofence_event.dart';
 part 'geofence_state.dart';
 
 class GeofenceBloc extends Bloc<GeofenceEvent, GeofenceState> {
-  String status = 'ENTER';
-  GeofenceBloc() : super(CurrentGeofence("ENTER"));
+  String id = 'BLACK';
+  GeofenceBloc() : super(CurrentGeofence("BLACK"));
 
 
   @override
@@ -24,8 +24,8 @@ class GeofenceBloc extends Bloc<GeofenceEvent, GeofenceState> {
   }
 
   Stream<GeofenceState> updateGeofence(event) async* {
-    this.status = event.status;
-    yield CurrentGeofence(event.status);
-    print(status);
+    this.id = event.id;
+    yield CurrentGeofence(event.id);
+    print(id);
   }
 }

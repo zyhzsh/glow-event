@@ -24,15 +24,33 @@ class _ExampleAppState extends State<ExampleApp> {
       interval: 5000, // Time interval to check geofence status
       accuracy: 100, // geofencing error range in meters
       loiteringDelayMs: 600000,
-      statusChangeDelayMs: 10000,
+      statusChangeDelayMs: 1000,
       allowMockLocations: false,
       printDevLog: false);
 
   // Create a [PolyGeofence] list.
   final _polyGeofenceList = <PolyGeofence>[
+    PolyGeofence(id: 'Red Zone',
+      data: {'Red'},
+      polygon: <LatLng>[
+        const LatLng(51.448316, 5.454186),
+        const LatLng(51.44916416512275, 5.4557594211801685),
+        const LatLng(51.44855570734108, 5.456918135510549),
+        const LatLng(51.44733208090987, 5.455662861711249),
+      ],
+    ),
+    PolyGeofence(id: 'Red Zone',
+      data: {'Red'},
+      polygon: <LatLng>[
+        const LatLng(51.44679915203191, 5.458106851466598),
+        const LatLng(51.44754702425743, 5.458841798246701),
+        const LatLng(51.446713244048304, 5.459993281684838),
+        const LatLng(51.44649741675963, 5.459585287867803),
+      ],
+    ),
     PolyGeofence(
       id: 'Green Zone',
-      data: {},
+      data: {'Green'},
       polygon: <LatLng>[
         const LatLng(51.447409255917215, 5.456023922597575),
         const LatLng(51.44849455555152, 5.456986835626296),
@@ -43,13 +61,18 @@ class _ExampleAppState extends State<ExampleApp> {
     ),
   ];
 
+
   // This function is to be called when the geofence status is changed.
   Future<void> _onPolyGeofenceStatusChanged(PolyGeofence polyGeofence,
       PolyGeofenceStatus polyGeofenceStatus, Location location) async {
-    //print('polyGeofence: ${polyGeofence.toJson()}');
-    //print('polyGeofenceStatus: ${polyGeofenceStatus.toString()}');
-    _streamController.sink.add(polyGeofence);
-    _geofenceBloc.add(UpdateGeofenceEvent(polyGeofence.status.toString()));
+    print('polyGeofence: ${polyGeofence.toJson()}');
+
+
+    if (polyGeofence.status == PolyGeofenceStatus.ENTER) {
+      if (polyGeofence.id == 'Green Zone' || polyGeofence.id == 'Red Zone') {
+        _geofenceBloc.add(UpdateGeofenceEvent(polyGeofence.id));
+      }
+    }
   }
 
   // This function is to be called when the location has changed.
@@ -89,7 +112,6 @@ class _ExampleAppState extends State<ExampleApp> {
     });
   }
 
-  Color myColor = Colors.blueGrey;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -116,15 +138,12 @@ class _ExampleAppState extends State<ExampleApp> {
           bloc: _geofenceBloc,
           builder: (context,state) {
               if(state is CurrentGeofence){
-              if( state.status == null)
+              if( state.id == null)
               {
                 return Scaffold();
               }
               else{
-                print(state.status == "ENTER");
-                print(state.status);
-                print(state.status.runtimeType);
-                  return Scaffold( backgroundColor: state.status == "PolyGeofenceStatus.ENTER"? Colors.green : Colors.red);}
+                  return Scaffold( backgroundColor: state.id == 'Green Zone'? Colors.green : Colors.red);}
               }
               else return Scaffold();
           }
@@ -147,16 +166,6 @@ class _ExampleAppState extends State<ExampleApp> {
         final updatedDateTime = DateTime.now();
 
         final content = snapshot.data?.toJson().toString() ?? '';
-        if(snapshot.data?.status == PolyGeofenceStatus.ENTER){
-          setState(() {
-            myColor = Colors.green;
-          });
-        }else{
-          setState(() {
-            myColor = Colors.red;
-          });
-
-        }
         return ListView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.all(8.0),
