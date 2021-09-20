@@ -31,7 +31,7 @@ class _ExampleAppState extends State<ExampleApp> {
   // Create a [PolyGeofence] list.
   final _polyGeofenceList = <PolyGeofence>[
     PolyGeofence(
-      id: 'Ketelplein',
+      id: 'Green Zone',
       data: {},
       polygon: <LatLng>[
         const LatLng(51.447409255917215, 5.456023922597575),
