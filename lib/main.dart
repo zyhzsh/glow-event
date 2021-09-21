@@ -28,6 +28,7 @@ class _ExampleAppState extends State<ExampleApp> {
       allowMockLocations: false,
       printDevLog: false);
 
+  int zoneCounter = 0;
   // Create a [PolyGeofence] list.
   final _polyGeofenceList = <PolyGeofence>[
     PolyGeofence(id: 'Red Zone',
@@ -66,12 +67,19 @@ class _ExampleAppState extends State<ExampleApp> {
   Future<void> _onPolyGeofenceStatusChanged(PolyGeofence polyGeofence,
       PolyGeofenceStatus polyGeofenceStatus, Location location) async {
     print('polyGeofence: ${polyGeofence.toJson()}');
-
-
+    zoneCounter++;
+    print('current zone:'+ polyGeofence.id.toString());
+    print('counter'+ zoneCounter.toString());
     if (polyGeofence.status == PolyGeofenceStatus.ENTER) {
-      if (polyGeofence.id == 'Green Zone' || polyGeofence.id == 'Red Zone') {
         _geofenceBloc.add(UpdateGeofenceEvent(polyGeofence.id));
+    }
+    else{
+      if(zoneCounter == 3){
+        _geofenceBloc.add(UpdateGeofenceEvent('black'));
       }
+    }
+    if(polyGeofence.id == 'Green Zone'){
+      zoneCounter = 0;
     }
   }
 
@@ -138,9 +146,9 @@ class _ExampleAppState extends State<ExampleApp> {
           bloc: _geofenceBloc,
           builder: (context,state) {
               if(state is CurrentGeofence){
-              if( state.id == null)
+              if( state.id == null || state.id == 'black')
               {
-                return Scaffold();
+                return Scaffold(backgroundColor: Colors.black);
               }
               else{
                   return Scaffold( backgroundColor: state.id == 'Green Zone'? Colors.green : Colors.red);}
