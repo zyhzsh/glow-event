@@ -23,7 +23,7 @@ class _ExampleAppState extends State<ExampleApp> {
   final _polyGeofenceService = PolyGeofenceService.instance.setup(
       interval: 5000, // Time interval to check geofence status
       accuracy: 100, // geofencing error range in meters
-      loiteringDelayMs: 600000,
+      loiteringDelayMs: 6000000,
       statusChangeDelayMs: 1000,
       allowMockLocations: false,
       printDevLog: false);
@@ -72,14 +72,23 @@ class _ExampleAppState extends State<ExampleApp> {
     print('counter'+ zoneCounter.toString());
     if (polyGeofence.status == PolyGeofenceStatus.ENTER) {
         _geofenceBloc.add(UpdateGeofenceEvent(polyGeofence.id));
+        zoneCounter = zoneCounter -1;
     }
     else{
       if(zoneCounter == 3){
         _geofenceBloc.add(UpdateGeofenceEvent('black'));
       }
     }
+    if(zoneCounter == 4){
+      zoneCounter = 3;
+      _geofenceBloc.add(UpdateGeofenceEvent('black'));
+    }
     if(polyGeofence.id == 'Green Zone'){
-      zoneCounter = 0;
+      //zoneCounter = 0;
+      if(zoneCounter == 4){
+        zoneCounter = 2;
+      }
+      print('Green Zone zoneCounter= ' + zoneCounter.toString());
     }
   }
 
