@@ -6,7 +6,7 @@ import 'package:poly_geofence_service/poly_geofence_service.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'bloc/geofence_bloc.dart';
-
+import 'package:avatar_glow/avatar_glow.dart';
 void main() => runApp(ExampleApp());
 
 class ExampleApp extends StatefulWidget {
@@ -176,8 +176,24 @@ class _ExampleAppState extends State<ExampleApp> {
               else{
                   return Scaffold( backgroundColor: state.id == 'Green Zone'? Colors.green : Colors.red,
                   body: Center(
-                    child: Image(
-                      image: AssetImage('images/arrow.png'),
+                    child: AvatarGlow(
+                      glowColor: state.id == 'Green Zone'? Colors.greenAccent : Colors.redAccent,
+                      endRadius: 90.0,
+                      duration: Duration(milliseconds: 2000),
+                      repeat: true,
+                      showTwoGlows: true,
+                      repeatPauseDuration: Duration(milliseconds: 100),
+                      child: Material(     // Replace this child with your own
+                        elevation: 8.0,
+                        shape: CircleBorder(),
+                        child: CircleAvatar(
+                          backgroundColor: state.id == 'Green Zone'? Colors.green : Colors.red,
+                          child: Image.asset('images/footprint-fixed.png',
+                            height: 60,
+                          ),
+                          radius: 40.0,
+                        ),
+                      ),
                     ),
                   ),
                   );}
