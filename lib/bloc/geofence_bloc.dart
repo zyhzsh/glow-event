@@ -8,8 +8,8 @@ part 'geofence_event.dart';
 part 'geofence_state.dart';
 
 class GeofenceBloc extends Bloc<GeofenceEvent, GeofenceState> {
-  String id = 'BLACK';
-  GeofenceBloc() : super(CurrentGeofence("BLACK"));
+  String id = 'black';
+  GeofenceBloc() : super(CurrentGeofence("black"));
 
 
   @override
