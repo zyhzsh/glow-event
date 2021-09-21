@@ -157,7 +157,21 @@ class _ExampleAppState extends State<ExampleApp> {
               if(state is CurrentGeofence){
               if( state.id == null || state.id == 'black')
               {
-                return Scaffold(backgroundColor: Colors.black);
+                return Scaffold(backgroundColor: Colors.black,
+                body: Center(
+                  child: Text('You are currently out of the zones of Glow 2021',
+                  style: new TextStyle(
+                    color: Colors.white,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                    letterSpacing: 0.8,
+                    wordSpacing: 1,
+                    fontFamily: 'Times new Roman'
+                  ),
+                  ),
+                ),
+                );
               }
               else{
                   return Scaffold( backgroundColor: state.id == 'Green Zone'? Colors.green : Colors.red,
