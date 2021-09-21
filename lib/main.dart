@@ -160,7 +160,13 @@ class _ExampleAppState extends State<ExampleApp> {
                 return Scaffold(backgroundColor: Colors.black);
               }
               else{
-                  return Scaffold( backgroundColor: state.id == 'Green Zone'? Colors.green : Colors.red);}
+                  return Scaffold( backgroundColor: state.id == 'Green Zone'? Colors.green : Colors.red,
+                  body: Center(
+                    child: Image(
+                      image: AssetImage('images/arrow.png'),
+                    ),
+                  ),
+                  );}
               }
               else return Scaffold();
           }
