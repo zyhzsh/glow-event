@@ -174,10 +174,12 @@ class _ExampleAppState extends State<ExampleApp> {
                 );
               }
               else{
-                  return Scaffold( backgroundColor: state.id == 'Green Zone'? Colors.green : Colors.red[700],
+                Color newRed = Color (0xFFEC101A);
+                Color newGreen = Color (0xFF7CD034);
+                  return Scaffold( backgroundColor: state.id == 'Green Zone'? newGreen : newRed,
                   body: Center(
                     child: AvatarGlow(
-                      glowColor: state.id == 'Green Zone'? Colors.greenAccent : Colors.redAccent,
+                      glowColor: state.id == 'Green Zone'? Colors.greenAccent : Colors.red.shade50,
                       endRadius: 90.0,
                       duration: Duration(milliseconds: 2000),
                       repeat: true,
@@ -187,7 +189,7 @@ class _ExampleAppState extends State<ExampleApp> {
                         elevation: 8.0,
                         shape: CircleBorder(),
                         child: CircleAvatar(
-                          backgroundColor: state.id == 'Green Zone'? Colors.green : Colors.red[700],
+                          backgroundColor: state.id == 'Green Zone'? newGreen : newRed,
                           child: Image.asset('images/footprint-fixed.png',
                             height: 60,
                           ),
