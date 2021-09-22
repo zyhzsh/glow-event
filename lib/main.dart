@@ -185,7 +185,7 @@ class _ExampleAppState extends State<ExampleApp> {
                       repeat: true,
                       showTwoGlows: true,
                       repeatPauseDuration: Duration(milliseconds: 100),
-                      child: Material(     // Replace this child with your own
+                      child: Material(
                         elevation: 8.0,
                         shape: CircleBorder(),
                         child: CircleAvatar(
