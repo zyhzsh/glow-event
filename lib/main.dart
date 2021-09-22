@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:glow2021v1/widgets/tracking_alerter.dart';
 import 'package:poly_geofence_service/poly_geofence_service.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -31,7 +32,8 @@ class _ExampleAppState extends State<ExampleApp> {
   int zoneCounter = 0;
   // Create a [PolyGeofence] list.
   final _polyGeofenceList = <PolyGeofence>[
-    PolyGeofence(id: 'Red Zone',
+    PolyGeofence(
+      id: 'Red Zone',
       data: {'Red'},
       polygon: <LatLng>[
         const LatLng(51.448316, 5.454186),
@@ -40,7 +42,8 @@ class _ExampleAppState extends State<ExampleApp> {
         const LatLng(51.44733208090987, 5.455662861711249),
       ],
     ),
-    PolyGeofence(id: 'Red Zone',
+    PolyGeofence(
+      id: 'Red Zone',
       data: {'Red'},
       polygon: <LatLng>[
         const LatLng(51.44679915203191, 5.458106851466598),
@@ -62,30 +65,27 @@ class _ExampleAppState extends State<ExampleApp> {
     ),
   ];
 
-
   // This function is to be called when the geofence status is changed.
   Future<void> _onPolyGeofenceStatusChanged(PolyGeofence polyGeofence,
       PolyGeofenceStatus polyGeofenceStatus, Location location) async {
     print('polyGeofence: ${polyGeofence.toJson()}');
     zoneCounter++;
-    print('current zone:'+ polyGeofence.id.toString());
-    print('counter'+ zoneCounter.toString());
+    print('current zone:' + polyGeofence.id.toString());
+    print('counter' + zoneCounter.toString());
     if (polyGeofence.status == PolyGeofenceStatus.ENTER) {
-        _geofenceBloc.add(UpdateGeofenceEvent(polyGeofence.id));
-        zoneCounter = zoneCounter -1;
-    }
-    else{
-      if(zoneCounter == 3){
+      _geofenceBloc.add(UpdateGeofenceEvent(polyGeofence.id));
+      zoneCounter = zoneCounter - 1;
+    } else {
+      if (zoneCounter == 3) {
         _geofenceBloc.add(UpdateGeofenceEvent('black'));
       }
     }
-    if(zoneCounter == 4){
+    if (zoneCounter == 4) {
       zoneCounter = 3;
       _geofenceBloc.add(UpdateGeofenceEvent('black'));
     }
-    if(polyGeofence.id == 'Green Zone'){
-      //zoneCounter = 0;
-      if(zoneCounter == 4){
+    if (polyGeofence.id == 'Green Zone') {
+      if (zoneCounter == 4) {
         zoneCounter = 2;
       }
       print('Green Zone zoneCounter= ' + zoneCounter.toString());
@@ -94,7 +94,7 @@ class _ExampleAppState extends State<ExampleApp> {
 
   // This function is to be called when the location has changed.
   void _onLocationChanged(Location location) {
-    //print('location: ${location.toJson()}');
+    print('location: ${location.toJson()}');
   }
 
   // This function is to be called when a location services status change occurs
@@ -125,7 +125,6 @@ class _ExampleAppState extends State<ExampleApp> {
           _onLocationServicesStatusChanged);
       _polyGeofenceService.addStreamErrorListener(_onError);
       _polyGeofenceService.start(_polyGeofenceList).catchError(_onError);
-
     });
   }
 
@@ -135,57 +134,71 @@ class _ExampleAppState extends State<ExampleApp> {
       // A widget used when you want to start a foreground task when trying to minimize or close the app.
       // Declare on top of the [Scaffold] widget.
       home: WillStartForegroundTask(
-        onWillStart: () {
-          // You can add a foreground task start condition.
-          return _polyGeofenceService.isRunningService;
-        },
-        androidNotificationOptions: AndroidNotificationOptions(
-          channelId: 'geofence_service_notification_channel',
-          channelName: 'Geofence Service Notification',
-          channelDescription:
-          'This notification appears when the geofence service is running in the background.',
-          channelImportance: NotificationChannelImportance.LOW,
-          priority: NotificationPriority.LOW,
-        ),
-        iosNotificationOptions:
-        IOSNotificationOptions(showNotification: true, playSound: true),
-        notificationTitle: 'Geofence Service is running',
-        notificationText: 'Tap to return to the app',
-        child: BlocBuilder(
-          bloc: _geofenceBloc,
-          builder: (context,state) {
-              if(state is CurrentGeofence){
-              if( state.id == null || state.id == 'black')
-              {
-                return Scaffold(backgroundColor: Colors.black,
-                body: Center(
-                  child: Text('You are currently out of the zones of Glow 2021',
-                  style: new TextStyle(
-                    color: Colors.white,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                    letterSpacing: 0.8,
-                    wordSpacing: 1,
-                    fontFamily: 'Times new Roman'
-                  ),
-                  ),
-                ),
-                );
-              }
-              else{
-                  return Scaffold( backgroundColor: state.id == 'Green Zone'? Colors.green : Colors.red,
-                  body: Center(
-                    child: Image(
-                      image: AssetImage('images/arrow.png'),
-                    ),
-                  ),
-                  );}
-              }
-              else return Scaffold();
-          }
-        )
-      ),
+          onWillStart: () {
+            // You can add a foreground task start condition.
+            return _polyGeofenceService.isRunningService;
+          },
+          androidNotificationOptions: AndroidNotificationOptions(
+            channelId: 'geofence_service_notification_channel',
+            channelName: 'Geofence Service Notification',
+            channelDescription:
+                'This notification appears when the geofence service is running in the background.',
+            channelImportance: NotificationChannelImportance.LOW,
+            priority: NotificationPriority.LOW,
+          ),
+          iosNotificationOptions:
+              IOSNotificationOptions(showNotification: true, playSound: true),
+          notificationTitle: 'Geofence Service is running',
+          notificationText: 'Tap to return to the app',
+          child: BlocBuilder(
+              bloc: _geofenceBloc,
+              builder: (context, state) {
+                if (state is CurrentGeofence) {
+                  if (state.id == null || state.id == 'black') {
+                    return Scaffold(
+                      backgroundColor: Colors.black,
+                      body: Center(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Tracker(
+                                color: Colors.white,
+                                frequency: 8000,
+                              ),
+                              Text(
+                                'You are currently out of the zones of Glow 2021',
+                                style: new TextStyle(
+                                    color: Colors.white,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                    letterSpacing: 0.8,
+                                    wordSpacing: 1,
+                                    fontFamily: 'Times new Roman'),
+                              ),
+                            ]),
+                      ),
+                    );
+                  } else {
+                    return Scaffold(
+                      backgroundColor:
+                          state.id == 'Green Zone' ? Colors.green : Colors.red,
+                      body: Center(
+                        child: state.id == 'Green Zone'
+                            ? Tracker(
+                                color: Colors.lightGreen,
+                                frequency: 10000,
+                              )
+                            : Tracker(
+                                color: Colors.green,
+                                frequency: 2000,
+                              ),
+                      ),
+                    );
+                  }
+                } else
+                  return Scaffold();
+              })),
     );
   }
 
@@ -201,7 +214,6 @@ class _ExampleAppState extends State<ExampleApp> {
       stream: _streamController.stream,
       builder: (context, snapshot) {
         final updatedDateTime = DateTime.now();
-
         final content = snapshot.data?.toJson().toString() ?? '';
         return ListView(
           physics: const BouncingScrollPhysics(),
