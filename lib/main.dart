@@ -179,7 +179,7 @@ class _ExampleAppState extends State<ExampleApp> {
                   return Scaffold( backgroundColor: state.id == 'Green Zone'? newGreen : newRed,
                   body: Center(
                     child: AvatarGlow(
-                      glowColor: state.id == 'Green Zone'? Colors.greenAccent : Colors.red.shade50,
+                      glowColor: state.id == 'Green Zone'? Colors.green.shade50 : Colors.red.shade50,
                       endRadius: 90.0,
                       duration: Duration(milliseconds: 2000),
                       repeat: true,
