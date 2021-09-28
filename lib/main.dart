@@ -184,13 +184,17 @@ class _ExampleAppState extends State<ExampleApp> {
                             state.id == 'Green Zone' ? newGreen : newRed,
                         body: Stack(
                           children: [
-                            Expanded(
-                              child: Align(
-                                alignment: FractionalOffset.bottomCenter,
-                               child: Container(
-                                  child: Image.asset('images/newsBannerV4.gif'),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Align(
+                                    alignment: FractionalOffset.bottomCenter,
+                                    child: Container(
+                                      child: Image.asset('images/newsBannerV4.gif'),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
                             Center(
                               child: AvatarGlow(
