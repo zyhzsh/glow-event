@@ -1,34 +1,41 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:glow2021v1/widgets/tracking_alerter.dart';
+import 'package:maps_toolkit/maps_toolkit.dart' as distanceUtil;
 import 'package:poly_geofence_service/poly_geofence_service.dart';
 import 'package:rxdart/rxdart.dart';
-
 import 'bloc/geofence_bloc.dart';
 
-void main() => runApp(ExampleApp());
+void main() => runApp(GlowApp());
 
-class ExampleApp extends StatefulWidget {
+class GlowApp extends StatefulWidget {
   @override
-  _ExampleAppState createState() => _ExampleAppState();
+  _GlowAppState createState() => _GlowAppState();
 }
 
-class _ExampleAppState extends State<ExampleApp> {
+class _GlowAppState extends State<GlowApp> {
+  //Pointer to center Location variable
+  final double _center_Lat = 51.4476;
+  final double _center_Lng = 5.4573;
+
+  double _current_Lat = 0;
+  double _current_Lng = 0;
+  //Distance tracker
+  num distance = 0;
+
   //final _streamController = StreamController<PolyGeofence>();
   StreamController<PolyGeofence> _streamController = BehaviorSubject();
   GeofenceBloc _geofenceBloc = GeofenceBloc();
 
   // Create a [PolyGeofenceService] instance and set options.
   final _polyGeofenceService = PolyGeofenceService.instance.setup(
-      interval: 5000, // Time interval to check geofence status
-      accuracy: 100, // geofencing error range in meters
+      interval: 500, // Time interval to check geofence status
+      accuracy: 20, // geofencing error range in meters
       loiteringDelayMs: 6000000,
       statusChangeDelayMs: 1000,
       allowMockLocations: false,
       printDevLog: false);
-
   int zoneCounter = 0;
   // Create a [PolyGeofence] list.
   final _polyGeofenceList = <PolyGeofence>[
@@ -68,10 +75,7 @@ class _ExampleAppState extends State<ExampleApp> {
   // This function is to be called when the geofence status is changed.
   Future<void> _onPolyGeofenceStatusChanged(PolyGeofence polyGeofence,
       PolyGeofenceStatus polyGeofenceStatus, Location location) async {
-    print('polyGeofence: ${polyGeofence.toJson()}');
     zoneCounter++;
-    print('current zone:' + polyGeofence.id.toString());
-    print('counter' + zoneCounter.toString());
     if (polyGeofence.status == PolyGeofenceStatus.ENTER) {
       _geofenceBloc.add(UpdateGeofenceEvent(polyGeofence.id));
       zoneCounter = zoneCounter - 1;
@@ -92,9 +96,23 @@ class _ExampleAppState extends State<ExampleApp> {
     }
   }
 
+  num _calDistanceInMeter() {
+    num result = distanceUtil.SphericalUtil.computeDistanceBetween(
+        distanceUtil.LatLng(_center_Lat, _center_Lng),
+        distanceUtil.LatLng(_current_Lat, _current_Lng));
+    return result;
+  }
+
   // This function is to be called when the location has changed.
   void _onLocationChanged(Location location) {
-    print('location: ${location.toJson()}');
+    //New location loaded, reset the offset for the direction
+    print(
+        'updated location: Lat: ${location.latitude} ,Lng: ${location.longitude}');
+    setState(() {
+      // distance = _calDistanceInMeter();
+      _current_Lat = location.latitude;
+      _current_Lng = location.longitude;
+    });
   }
 
   // This function is to be called when a location services status change occurs
@@ -110,7 +128,6 @@ class _ExampleAppState extends State<ExampleApp> {
       print('Undefined error: $error');
       return;
     }
-
     print('ErrorCode: $errorCode');
   }
 
@@ -164,6 +181,8 @@ class _ExampleAppState extends State<ExampleApp> {
                               Tracker(
                                 color: Colors.white,
                                 frequency: 8000,
+                                current_Lat: _current_Lat,
+                                current_Lng: _current_Lng,
                               ),
                               Text(
                                 'You are currently out of the zones of Glow 2021',
@@ -188,10 +207,14 @@ class _ExampleAppState extends State<ExampleApp> {
                             ? Tracker(
                                 color: Colors.lightGreen,
                                 frequency: 10000,
+                                current_Lat: _current_Lat,
+                                current_Lng: _current_Lng,
                               )
                             : Tracker(
                                 color: Colors.green,
                                 frequency: 2000,
+                                current_Lat: _current_Lat,
+                                current_Lng: _current_Lng,
                               ),
                       ),
                     );
