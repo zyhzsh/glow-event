@@ -134,15 +134,15 @@ class Compass extends StatefulWidget {
   final double center_Lat;
   final double center_Lng;
   // Green Zone Center : 51.4476 ,5.4573
-  // Fontys Building Test Center : 51.450694, 5.454695
-  // My Home : 51.560136, 5.056212
+  // Fontys Building Test Center : 51.450744, 5.454335
+  // Testing Location : 51.560136, 5.056212
   Compass(
       {Key? key,
       this.current_lat = 0,
       this.current_lng = 0,
       //Green Center Location
-      this.center_Lat = 51.560136,
-      this.center_Lng = 5.056212})
+      this.center_Lat = 51.450744,
+      this.center_Lng = 5.454335})
       : super(key: key);
   @override
   _CompassState createState() => _CompassState();
@@ -150,7 +150,6 @@ class Compass extends StatefulWidget {
 
 class _CompassState extends State<Compass> {
   double _heading = 0;
-
   double getOffsetFromNorth(double currentLatitude, double currentLongitude,
       double targetLatitude, double targetLongitude) {
     var la_rad = cal.radians(currentLatitude);
@@ -198,12 +197,14 @@ class _CompassState extends State<Compass> {
   void _onData(double x) {
     var offset = getOffsetFromNorth(widget.current_lat, widget.current_lng,
         widget.center_Lat, widget.center_Lng);
-    print('User: ${widget.current_lat} and ${widget.current_lng}');
-    var origin = -2 * pi * (x - offset) / 360;
+    print('Bearing: --------------------------------:${offset}');
+    var offsetAngle = -2 * pi * (x - offset) / 360;
+    print('Orginal: ----------------------------------- :${x}');
+
+    print('Result:-------------------------------:${offsetAngle}');
     if (mounted) {
       setState(() {
-        //   _heading = origin + offset;
-        _heading = origin;
+        _heading = offsetAngle;
       });
     }
   }

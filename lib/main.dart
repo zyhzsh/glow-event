@@ -15,9 +15,13 @@ class GlowApp extends StatefulWidget {
 }
 
 class _GlowAppState extends State<GlowApp> {
+  // Green Zone Center : 51.4476 ,5.4573
+  // Fontys Building Test Center : 51.450744, 5.454335
+  // Testing Location : 51.560136, 5.056212
+
   //Pointer to center Location variable
-  final double _center_Lat = 51.4476;
-  final double _center_Lng = 5.4573;
+  final double _center_Lat = 51.450744;
+  final double _center_Lng = 5.454335;
 
   double _current_Lat = 0;
   double _current_Lng = 0;
@@ -109,7 +113,7 @@ class _GlowAppState extends State<GlowApp> {
     print(
         'updated location: Lat: ${location.latitude} ,Lng: ${location.longitude}');
     setState(() {
-      // distance = _calDistanceInMeter();
+      distance = _calDistanceInMeter();
       _current_Lat = location.latitude;
       _current_Lng = location.longitude;
     });
@@ -185,7 +189,8 @@ class _GlowAppState extends State<GlowApp> {
                                 current_Lng: _current_Lng,
                               ),
                               Text(
-                                'You are currently out of the zones of Glow 2021',
+                                ' Distance: ${distance.toInt()} meter' +
+                                    '\n\nYou are currently out of the zones of Glow 2021',
                                 style: new TextStyle(
                                     color: Colors.white,
                                     fontStyle: FontStyle.italic,
