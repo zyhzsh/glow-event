@@ -195,8 +195,11 @@ class _ExampleAppState extends State<ExampleApp> {
                                         onPressed: () => showDialog<String>(
                                           context: context,
                                           builder: (BuildContext context) => AlertDialog(
-                                            title: const Text('Info Screen Green'),
-                                            content: const Text('Information about the green Dutch footprint'),
+                                            backgroundColor: Colors.transparent,
+                                            title: const Text('Info Screen Green',
+                                            style: TextStyle(color: Colors.white),),
+                                            content: const Text('Information about the green Dutch footprint',
+                                              style: TextStyle(color: Colors.white),),
                                             actions: <Widget>[
                                               TextButton(
                                                 onPressed: () => Navigator.pop(context, 'Close'),
