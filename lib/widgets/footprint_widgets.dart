@@ -51,7 +51,7 @@ class _TrackerState extends State<Tracker> {
   }
 }
 
-// Ripple Animation
+// Pulse Animation
 class WaterRipple extends StatefulWidget {
   final int count;
   final Color color;
@@ -133,7 +133,7 @@ class Compass extends StatefulWidget {
   double current_lng;
   final double center_Lat;
   final double center_Lng;
-  // Green Zone Center : 51.4476 ,5.4573
+  // Green Zone Center : 51.447717, 5.456978
   // Fontys Building Test Center : 51.450744, 5.454335
   // Testing Location : 51.560136, 5.056212
   Compass(
@@ -141,8 +141,8 @@ class Compass extends StatefulWidget {
       this.current_lat = 0,
       this.current_lng = 0,
       //Green Center Location
-      this.center_Lat = 51.450744,
-      this.center_Lng = 5.454335})
+      this.center_Lat = 51.447717,
+      this.center_Lng = 5.456978})
       : super(key: key);
   @override
   _CompassState createState() => _CompassState();
