@@ -190,7 +190,23 @@ class _ExampleAppState extends State<ExampleApp> {
                                   child: Align(
                                     alignment: FractionalOffset.bottomCenter,
                                     child: Container(
-                                      child: Image.asset('images/newsBannerV4.gif'),
+                                      child: RaisedButton(
+                                        color: newGreen,
+                                        onPressed: () => showDialog<String>(
+                                          context: context,
+                                          builder: (BuildContext context) => AlertDialog(
+                                            title: const Text('Info Screen Green'),
+                                            content: const Text('Information about the green Dutch footprint'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(context, 'Close'),
+                                                child: const Text('Close'),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                          child: const Text('Info'),
+                                      ),
                                     ),
                                   ),
                                 ),
