@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:glow2021v1/bloc/geofence_bloc.dart';
-import 'package:glow2021v1/widgets/footprint_widgets.dart';
+import 'package:glow2021v1/screens/black_screen.dart';
+import 'package:glow2021v1/screens/green_screen.dart';
+import 'package:glow2021v1/screens/red_screen.dart';
 import 'package:maps_toolkit/maps_toolkit.dart' as distanceUtil;
 import 'package:poly_geofence_service/poly_geofence_service.dart';
 import 'package:rxdart/rxdart.dart';
@@ -16,7 +18,7 @@ class _GlowAppState extends State<GlowApp> {
   // Green Zone Center : 51.447717, 5.456978
   // Fontys Building Test Center : 51.450744, 5.454335
   // Testing Location : 51.560136, 5.056212
-  //Pointer to center Location variable
+  // Pointer to center Location variable
   final double _center_Lat = 51.447717;
   final double _center_Lng = 5.456978;
 
@@ -171,65 +173,22 @@ class _GlowAppState extends State<GlowApp> {
               builder: (context, state) {
                 if (state is CurrentGeofence) {
                   if (state.id == null || state.id == 'black') {
-                    return Scaffold(
-                      backgroundColor: Colors.black,
-                      body: Center(
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Tracker(
-                                color: Colors.white,
-                                frequency: 8000,
-                                current_Lat: _current_Lat,
-                                current_Lng: _current_Lng,
-                              ),
-                              Text(
-                                ' Distance: ${distance.toInt()} meter' +
-                                    '\n\nYou are currently out of the zones of Glow 2021',
-                                style: new TextStyle(
-                                    color: Colors.white,
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30,
-                                    letterSpacing: 0.8,
-                                    wordSpacing: 1,
-                                    fontFamily: 'Times new Roman'),
-                              ),
-                            ]),
-                      ),
-                    );
+                    return BlackZoneScreen(
+                        current_Lat: _current_Lat,
+                        current_Lnt: _current_Lng,
+                        distance_to_center: distance); // Black Screen
+                  } else if (state.id == 'Green Zone') {
+                    return GreenZoneScreen(
+                        current_Lat: _current_Lat,
+                        current_Lnt: _current_Lng,
+                        distance_to_center: distance); // Green Screen
                   } else {
-                    return Scaffold(
-                      backgroundColor:
-                          state.id == 'Green Zone' ? Colors.green : Colors.red,
-                      body: Center(
-                        child: state.id == 'Green Zone'
-                            ? Column(
-                                children: [
-                                  Tracker(
-                                    color: Colors.lightGreen,
-                                    frequency: 10000,
-                                    current_Lat: _current_Lat,
-                                    current_Lng: _current_Lng,
-                                  ),
-                                  Text('Distance: ${distance}'),
-                                ],
-                              )
-                            : Column(
-                                children: [
-                                  Tracker(
-                                    color: Colors.green,
-                                    frequency: 2000,
-                                    current_Lat: _current_Lat,
-                                    current_Lng: _current_Lng,
-                                  ),
-                                  Text('Distance: ${distance}'),
-                                ],
-                              ),
-                      ),
-                    );
-                  }
-                } else
+                    return RedZoneScreen(
+                        current_Lat: _current_Lat,
+                        current_Lnt: _current_Lng,
+                        distance_to_center: distance);
+                  } // Red Screen
+                } else //Error or Empty Screen...
                   return Scaffold();
               })),
     );
