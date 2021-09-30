@@ -191,7 +191,7 @@ class _ExampleAppState extends State<ExampleApp> {
                                     alignment: FractionalOffset.bottomCenter,
                                     child: Container(
                                       child: RaisedButton(
-                                        color: newGreen,
+                                        color: state.id == 'Green Zone' ? newGreen : newRed,
                                         onPressed: () => showDialog<String>(
                                           context: context,
                                           builder: (BuildContext context) => AlertDialog(
