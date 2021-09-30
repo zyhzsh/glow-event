@@ -29,6 +29,8 @@ class _ExampleAppState extends State<ExampleApp> {
       printDevLog: false);
 
   int zoneCounter = 0;
+  Color newRed = Color(0xFFEC101A);
+  Color newGreen = Color(0xFF7CD034);
 
   final _polyGeofenceList = <PolyGeofence>[
     PolyGeofence(
@@ -168,8 +170,6 @@ class _ExampleAppState extends State<ExampleApp> {
                       ),
                     );
                   } else {
-                    Color newRed = Color(0xFFEC101A);
-                    Color newGreen = Color(0xFF7CD034);
                     return Scaffold(
                         backgroundColor:
                             state.id == 'Green Zone' ? newGreen : newRed,
