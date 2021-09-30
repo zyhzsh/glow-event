@@ -89,8 +89,7 @@ class _ExampleAppState extends State<ExampleApp> {
       _geofenceBloc.add(UpdateGeofenceEvent('black'));
     }
     if (polyGeofence.id == 'Green Zone') {
-      //zoneCounter = 0;
-      if (zoneCounter == 4) {
+      if (zoneCounter == 4|| zoneCounter == 3) {
         zoneCounter = 2;
       }
       print('Green Zone zoneCounter= ' + zoneCounter.toString());
@@ -255,23 +254,4 @@ class _ExampleAppState extends State<ExampleApp> {
     super.dispose();
   }
 
-  Widget _buildContentView() {
-    return StreamBuilder<PolyGeofence>(
-      stream: _streamController.stream,
-      builder: (context, snapshot) {
-        final updatedDateTime = DateTime.now();
-
-        final content = snapshot.data?.toJson().toString() ?? '';
-        return ListView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.all(8.0),
-          children: [
-            Text('•\t\tPolyGeofence (updated: $updatedDateTime)'),
-            SizedBox(height: 10.0),
-            Text(content),
-          ],
-        );
-      },
-    );
-  }
 }
