@@ -17,16 +17,12 @@ class ExampleApp extends StatefulWidget {
 }
 
 class _ExampleAppState extends State<ExampleApp> {
-  //final _streamController = StreamController<PolyGeofence>();
   StreamController<PolyGeofence> _streamController = BehaviorSubject();
   GeofenceBloc _geofenceBloc = GeofenceBloc();
 
-  // Create a [PolyGeofenceService] instance and set options.
   final _polyGeofenceService = PolyGeofenceService.instance.setup(
-      interval: 5000,
-      // Time interval to check geofence status
-      accuracy: 100,
-      // geofencing error range in meters
+      interval: 5000, // Time interval to check geofence status
+      accuracy: 100, // geofencing error range in meters
       loiteringDelayMs: 6000000,
       statusChangeDelayMs: 1000,
       allowMockLocations: false,
@@ -34,7 +30,6 @@ class _ExampleAppState extends State<ExampleApp> {
 
   int zoneCounter = 0;
 
-  // Create a [PolyGeofence] list.
   final _polyGeofenceList = <PolyGeofence>[
     PolyGeofence(
       id: 'Red Zone',
@@ -135,11 +130,8 @@ class _ExampleAppState extends State<ExampleApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // A widget used when you want to start a foreground task when trying to minimize or close the app.
-      // Declare on top of the [Scaffold] widget.
       home: WillStartForegroundTask(
           onWillStart: () {
-            // You can add a foreground task start condition.
             return _polyGeofenceService.isRunningService;
           },
           androidNotificationOptions: AndroidNotificationOptions(
