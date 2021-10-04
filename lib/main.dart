@@ -187,9 +187,11 @@ class _ExampleAppState extends State<ExampleApp> {
                                           context: context,
                                           builder: (BuildContext context) => AlertDialog(
                                             backgroundColor: Colors.transparent,
-                                            title: const Text('Info Screen Green',
-                                            style: TextStyle(color: Colors.white),),
-                                            content: const Text('Information about the green Dutch footprint',
+                                            title: state.id == 'Green Zone' ? const Text('Info Screen Green',
+                                            style: TextStyle(color: Colors.white),) : const Text('Info Screen Red',
+                                              style: TextStyle(color: Colors.white),),
+                                            content: state.id == 'Green Zone' ? const Text('Information about the green Dutch footprint',
+                                              style: TextStyle(color: Colors.white),) : const Text('Information about the red Dutch footprint',
                                               style: TextStyle(color: Colors.white),),
                                             actions: <Widget>[
                                               TextButton(
