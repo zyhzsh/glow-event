@@ -175,7 +175,23 @@ class _ExampleAppState extends State<ExampleApp> {
                             state.id == 'Green Zone' ? newGreen : newRed,
                         body: Stack(
                           children: [
-                            Row(
+                            Positioned(
+                              top: 370,
+                              left: 80,
+                              width: 250,
+                              height: 250,
+                              child: Row(
+                              children: [
+                                Expanded(child: Align(
+                                  alignment: FractionalOffset.bottomCenter,
+                                  child: Container(
+                                    child: Image.asset('images/footprint-fixed.png'),
+                                    height: 120.0,
+                                  ),
+                                ))
+                              ],
+                            ),),
+                            Positioned(child:                             Row(
                               children: [
                                 Expanded(
                                   child: Align(
@@ -188,7 +204,7 @@ class _ExampleAppState extends State<ExampleApp> {
                                           builder: (BuildContext context) => AlertDialog(
                                             backgroundColor: Colors.transparent,
                                             title: state.id == 'Green Zone' ? const Text('Info Screen Green',
-                                            style: TextStyle(color: Colors.white),) : const Text('Info Screen Red',
+                                              style: TextStyle(color: Colors.white),) : const Text('Info Screen Red',
                                               style: TextStyle(color: Colors.white),),
                                             content: state.id == 'Green Zone' ? const Text('Information about the green Dutch footprint',
                                               style: TextStyle(color: Colors.white),) : const Text('Information about the red Dutch footprint',
@@ -201,13 +217,13 @@ class _ExampleAppState extends State<ExampleApp> {
                                             ],
                                           ),
                                         ),
-                                          child: const Text('Info'),
+                                        child: const Text('Info'),
                                       ),
                                     ),
                                   ),
                                 ),
                               ],
-                            ),
+                            ),),
                             Center(
                               child: AvatarGlow(
                                 glowColor: state.id == 'Green Zone' ? Colors.green.shade50 : Colors.red.shade50,
