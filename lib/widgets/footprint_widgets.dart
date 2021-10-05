@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:glow2021v1/widgets/infomation_widgets.dart';
 import 'package:vector_math/vector_math.dart' as cal;
 import 'package:flutter_compass/flutter_compass.dart';
 
@@ -25,26 +24,19 @@ class Tracker extends StatefulWidget {
 class _TrackerState extends State<Tracker> {
   @override
   Widget build(BuildContext context) {
-    return Stack(alignment: Alignment.center, children: [
+    return Column(children: [
       Container(
-          height: 400,
-          width: 400,
+          height: 200,
+          width: 200,
           child: WaterRipple(
             count: 1,
             color: widget.color,
             frequency: widget.frequency,
           )),
-      FloatingActionButton(
-        backgroundColor: Color(0x7F7F7F),
-        onPressed: () => {
-          showCupertinoModalPopup(
-              context: context, builder: (context) => Info())
-        },
-        child: Container(
-          child: Compass(
-            current_lat: widget.current_Lat,
-            current_lng: widget.current_Lng,
-          ),
+      Container(
+        child: Compass(
+          current_lat: widget.current_Lat,
+          current_lng: widget.current_Lng,
         ),
       ),
     ]);
@@ -197,11 +189,7 @@ class _CompassState extends State<Compass> {
   void _onData(double x) {
     var offset = getOffsetFromNorth(widget.current_lat, widget.current_lng,
         widget.center_Lat, widget.center_Lng);
-    print('Bearing: --------------------------------:${offset}');
     var offsetAngle = -2 * pi * (x - offset) / 360;
-    print('Orginal: ----------------------------------- :${x}');
-
-    print('Result:-------------------------------:${offsetAngle}');
     if (mounted) {
       setState(() {
         _heading = offsetAngle;
@@ -215,8 +203,10 @@ class _CompassState extends State<Compass> {
         child: Transform.rotate(
       angle: _heading,
       child: Center(
+          child: Container(
+        height: 120,
         child: Image.asset('images/footprint-fixed.png'),
-      ),
+      )),
     ));
   }
 }
