@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poly_geofence_service/poly_geofence_service.dart';
 import 'package:rxdart/rxdart.dart';
-
 import 'bloc/geofence_bloc.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 
@@ -31,6 +31,7 @@ class _ExampleAppState extends State<ExampleApp> {
   int zoneCounter = 0;
   Color newRed = Color(0xFFEC101A);
   Color newGreen = Color(0xFF7CD034);
+
 
   final _polyGeofenceList = <PolyGeofence>[
     PolyGeofence(
@@ -76,6 +77,8 @@ class _ExampleAppState extends State<ExampleApp> {
     if (polyGeofence.status == PolyGeofenceStatus.ENTER) {
       _geofenceBloc.add(UpdateGeofenceEvent(polyGeofence.id));
       zoneCounter = zoneCounter - 1;
+      HapticFeedback.vibrate();
+
     } else {
       if (zoneCounter == 3) {
         _geofenceBloc.add(UpdateGeofenceEvent('black'));
@@ -191,7 +194,7 @@ class _ExampleAppState extends State<ExampleApp> {
                                 ))
                               ],
                             ),),
-                            Positioned(child:                             Row(
+                            Positioned(child: Row(
                               children: [
                                 Expanded(
                                   child: Align(
