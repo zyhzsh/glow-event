@@ -19,11 +19,9 @@ class BlackZoneScreen extends StatefulWidget {
 class _BlackZoneScreenState extends State<BlackZoneScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.black,
-      ),
-      child: Center(
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Tracker(
             color: Colors.white,
