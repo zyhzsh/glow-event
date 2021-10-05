@@ -211,23 +211,18 @@ class _ExampleAppState extends State<ExampleApp> {
                             Center(
                               child: AvatarGlow(
                                 glowColor: state.id == 'Green Zone' ? Colors.green.shade50 : Colors.red.shade50,
-                                endRadius: 90.0,
+                                endRadius: 150.0,
                                 duration: Duration(milliseconds: 2000),
                                 repeat: true,
                                 showTwoGlows: true,
                                 repeatPauseDuration:
                                     Duration(milliseconds: 100),
                                 child: Material(
-                                  // Replace this child with your own
-                                  elevation: 8.0,
+                                  elevation: 0.0,
                                   shape: CircleBorder(),
                                   child: CircleAvatar(
                                     backgroundColor: state.id == 'Green Zone' ? newGreen : newRed,
-                                    child: Image.asset(
-                                      'images/footprint-fixed.png',
-                                      height: 60,
-                                    ),
-                                    radius: 40.0,
+                                    radius: 0.0,
                                   ),
                                 ),
                               ),
