@@ -227,7 +227,12 @@ class _ExampleAppState extends State<ExampleApp> {
                                 ),
                               ],
                             ),),
-                            Center(
+                            Positioned(
+                              top: 150,
+                              left: 80,
+                              width: 250,
+                              height: 250,
+                              child: Center(
                               child: AvatarGlow(
                                 glowColor: state.id == 'Green Zone' ? Colors.green.shade50 : Colors.red.shade50,
                                 endRadius: 150.0,
@@ -235,7 +240,7 @@ class _ExampleAppState extends State<ExampleApp> {
                                 repeat: true,
                                 showTwoGlows: true,
                                 repeatPauseDuration:
-                                    Duration(milliseconds: 100),
+                                Duration(milliseconds: 100),
                                 child: Material(
                                   elevation: 0.0,
                                   shape: CircleBorder(),
@@ -245,7 +250,7 @@ class _ExampleAppState extends State<ExampleApp> {
                                   ),
                                 ),
                               ),
-                            ),
+                            ),)
                           ],
                         ));
                   }
