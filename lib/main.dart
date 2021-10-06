@@ -250,7 +250,14 @@ class _ExampleAppState extends State<ExampleApp> {
                                   ),
                                 ),
                               ),
-                            ),)
+                            ),),
+                            Positioned(
+                              top: 420,
+                                left: 80,
+                                width: 270,
+                                height: 250,
+                                child: Text("Distance to centre of the green zone: 15 metres", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, height: 1.5, fontSize: 18),)
+                            ),
                           ],
                         ));
                   }
