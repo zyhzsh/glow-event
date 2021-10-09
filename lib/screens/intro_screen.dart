@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'guide_screen.dart';
-
 class IntroPage extends StatefulWidget {
   bool openGuideScreen = false;
   IntroPage({Key? key}) : super(key: key);
