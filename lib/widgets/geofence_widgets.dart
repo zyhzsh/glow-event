@@ -178,10 +178,12 @@ class _GlowAppState extends State<GlowApp> {
                         current_Lnt: _current_Lng,
                         distance_to_center: distance); // Black Screen
                   } else if (state.id == 'Green Zone') {
-                    return GreenZoneScreen(
-                        current_Lat: _current_Lat,
-                        current_Lnt: _current_Lng,
-                        distance_to_center: distance); // Green Screen
+                    return Stack(children: [
+                      GreenZoneScreen(
+                          current_Lat: _current_Lat,
+                          current_Lnt: _current_Lng,
+                          distance_to_center: distance)
+                    ]);
                   } else {
                     return RedZoneScreen(
                         current_Lat: _current_Lat,

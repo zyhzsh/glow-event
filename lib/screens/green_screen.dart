@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:glow2021v1/widgets/footprint_widgets.dart';
-import 'package:glow2021v1/widgets/infomation_widgets.dart';
 
 class GreenZoneScreen extends StatefulWidget {
   double current_Lat;
@@ -19,67 +17,68 @@ class GreenZoneScreen extends StatefulWidget {
 }
 
 class _GreenZoneScreenState extends State<GreenZoneScreen> {
-  Widget GetMessageForUser() {
-    if (widget.distance_to_center.toInt() <= 20) {
-      return Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-          decoration: BoxDecoration(color: Colors.black.withOpacity(0.5)),
-          child: Text(
-            'You\'re standing in the center.\n Yeah ~! raise your hand, let\'s celebrate.',
-            textAlign: TextAlign.center,
-            style: new TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
-                letterSpacing: 0.8,
-                wordSpacing: 1,
-                fontFamily: 'Montserrat'),
-          ));
-    } else {
-      return Text(
-        'Great ~ !\n You are getting closer \n ${widget.distance_to_center.toInt()} meters',
-        textAlign: TextAlign.center,
-        style: new TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 30,
-            letterSpacing: 0.8,
-            wordSpacing: 1,
-            fontFamily: 'Montserrat'),
-      );
-    }
-    return Text('');
-  }
-
-  Widget Getfootprint() {
-    if (widget.distance_to_center.toInt() > 20) {
-      return Tracker(
-        color: Colors.white,
-        frequency: 700,
-        current_Lat: widget.current_Lat,
-        current_Lng: widget.current_Lnt,
-      );
-    } else {
-      return Text('');
-    }
+  void showAlert(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              backgroundColor: Colors.transparent,
+              title: const Text(
+                'Info Screen Green',
+                style: TextStyle(color: Colors.white),
+              ),
+              content: const Text(
+                'Information about the green Dutch footprint',
+                style: TextStyle(color: Colors.white),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Close'),
+                  child: const Text('Close'),
+                ),
+              ],
+            ));
   }
 
   @override
   Widget build(BuildContext context) {
+    if (GreenZoneScreen.showOnce == false) {
+      Future.delayed(Duration.zero, () => showAlert(context));
+      GreenZoneScreen.showOnce = true;
+    }
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.transparent,
-          onPressed: () {
-            showModalBottomSheet(
-                backgroundColor: Colors.transparent,
-                isScrollControlled: true,
-                context: context,
-                builder: (context) => FractionallySizedBox(
-                      heightFactor: 1,
-                      child: Info(),
-                    ));
-          },
+          onPressed: () => showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              backgroundColor: Colors.transparent,
+              title: const Text(
+                'Info Screen Green',
+                style: TextStyle(color: Colors.white),
+              ),
+              content: const Text(
+                'Information about the green Dutch footprint',
+                style: TextStyle(color: Colors.white),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Close'),
+                  child: const Text('Close'),
+                ),
+              ],
+            ),
+          ),
+
+          // showModalBottomSheet(
+          //     backgroundColor: Colors.transparent,
+          //     isScrollControlled: true,
+          //     context: context,
+          //     builder: (context) => FractionallySizedBox(
+          //           heightFactor: 1,
+          //           child: Info(),
+          //         ));
+
           child: Container(
               padding: EdgeInsets.only(top: 8),
               child: new Image.asset(
@@ -101,11 +100,8 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                     left: 180,
                     width: 200,
                     height: 200,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: new DecorationImage(
-                            image: AssetImage('images/flower-1.png')),
-                      ),
+                    child: Flower(
+                      path: 'images/flower-1.png',
                     ),
                   ),
                   Positioned(
@@ -113,23 +109,21 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                     left: 0,
                     width: 200,
                     height: 200,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: new DecorationImage(
-                            image: AssetImage('images/flower-2.png')),
-                      ),
+                    child: Flower(
+                      path: 'images/flower-2.png',
                     ),
+                    //
                   ),
                   Positioned(
                     top: 500,
                     left: 0,
                     width: 200,
                     height: 200,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: new DecorationImage(
-                            image: AssetImage('images/flower-3.png')),
-                      ),
+                    child: Flower(
+                      path: 'images/flower-3.png',
+                      beginSize: 10.0,
+                      endSize: 200.0,
+                      duration: 7,
                     ),
                   ),
                   Positioned(
@@ -137,11 +131,8 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                     left: 300,
                     width: 200,
                     height: 200,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: new DecorationImage(
-                            image: AssetImage('images/flower-4.png')),
-                      ),
+                    child: Flower(
+                      path: 'images/flower-4.png',
                     ),
                   ),
                   Positioned(
@@ -149,18 +140,92 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                     left: 20,
                     width: 100,
                     height: 200,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: new DecorationImage(
-                            image: AssetImage('images/flower-5.png')),
-                      ),
+                    child: Flower(
+                      path: 'images/flower-5.png',
+                      beginSize: 5.0,
+                      endSize: 100.0,
+                    ),
+                  ),
+                  Positioned(
+                    top: 310,
+                    left: 100,
+                    width: 100,
+                    height: 200,
+                    child: Flower(
+                      path: 'images/flower-6.png',
+                      beginSize: 5.0,
+                      endSize: 100.0,
+                      duration: 3,
+                    ),
+                  ),
+                  Positioned(
+                    top: 400,
+                    left: 200,
+                    width: 100,
+                    height: 200,
+                    child: Flower(
+                      path: 'images/flower-7.png',
+                      beginSize: 5.0,
+                      endSize: 100.0,
+                      duration: 3,
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 30,
+                    left: 200,
+                    width: 100,
+                    height: 200,
+                    child: Flower(
+                      path: 'images/flower-8.png',
+                      beginSize: 5.0,
+                      endSize: 100.0,
+                      duration: 3,
+                    ),
+                  ),
+                  Positioned(
+                    top: 50,
+                    right: 10,
+                    width: 120,
+                    height: 200,
+                    child: Flower(
+                      path: 'images/flower-9.png',
+                      beginSize: 5.0,
+                      endSize: 100.0,
+                      duration: 3,
+                    ),
+                  ),
+                  Positioned(
+                    top: 150,
+                    left: 40,
+                    width: 120,
+                    height: 200,
+                    child: Flower(
+                      path: 'images/flower-10.png',
+                      beginSize: 5.0,
+                      endSize: 100.0,
+                      duration: 3,
                     ),
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Getfootprint(),
-                      GetMessageForUser(),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 20.0),
+                        decoration:
+                            BoxDecoration(color: Colors.black.withOpacity(0.5)),
+                        child: Text(
+                          'You\'re standing in the center.\n Yeah ~! raise your hand, let\'s celebrate.',
+                          textAlign: TextAlign.center,
+                          style: new TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                              letterSpacing: 0.8,
+                              wordSpacing: 1,
+                              fontFamily: 'Montserrat'),
+                        ),
+                      )
                     ],
                   ),
                 ],
@@ -169,39 +234,65 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
   }
 }
 
-//
+class Flower extends StatefulWidget {
+  String path;
+  int duration;
+  double beginSize;
+  double endSize;
+  Flower(
+      {Key? key,
+      this.path = 'images/flower-1.png',
+      this.duration = 5,
+      this.beginSize = 100.0,
+      this.endSize = 200.0})
+      : super(key: key);
 
-//
-// class flower extends StatefulWidget {
-//   const flower({Key? key}) : super(key: key);
-//
-//   @override
-//   _flowerState createState() => _flowerState();
-// }
-//
-// class _flowerState extends State<flower> with TickerProviderStateMixin {
-//   late AnimationController _controller;
-//   late Animation<int> _animation;
-//   @override
-//   void initState() {
-//     _controller = new AnimationController(
-//         vsync: this, duration: const Duration(seconds: 5))
-//       ..repeat();
-//     _animation = new IntTween(begin: 0, end: 80).animate(_controller);
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       child: new AnimatedBuilder(
-//         animation: _animation,
-//         builder: (BuildContext context, Widget? child) {
-//           return new Image.asset(
-//             'images/flower.gif',
-//             gaplessPlayback: true,
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
+  @override
+  FlowerState createState() => FlowerState();
+}
+
+class FlowerState extends State<Flower> with SingleTickerProviderStateMixin {
+  late Animation<double> animation;
+  late AnimationController controller;
+
+  initState() {
+    super.initState();
+    // Controller设置动画时长
+    // vsync设置一个TickerProvider，当前State 混合了SingleTickerProviderStateMixin就是一个TickerProvider
+    controller = AnimationController(
+        duration: Duration(seconds: widget.duration), vsync: this //
+        );
+    // Tween设置动画的区间值，animate()方法传入一个Animation，AnimationController继承Animation
+    animation = new Tween(begin: widget.beginSize, end: widget.endSize)
+        .animate(controller);
+    controller.repeat(reverse: true);
+//    controller.repeat(reverse: true);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+        animation: animation,
+        builder: (BuildContext ctx, Widget? child) {
+          return Center(
+            child: Container(
+              alignment: Alignment.center,
+              width: animation.value,
+              height: animation.value,
+              child: Container(
+                decoration: BoxDecoration(
+                  image:
+                      new DecorationImage(image: AssetImage('${widget.path}')),
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+}

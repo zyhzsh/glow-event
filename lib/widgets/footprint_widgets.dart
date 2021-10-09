@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:glow2021v1/widgets/pluse_widgets.dart';
 import 'package:vector_math/vector_math.dart' as cal;
 import 'package:flutter_compass/flutter_compass.dart';
 
@@ -24,98 +25,10 @@ class Tracker extends StatefulWidget {
 class _TrackerState extends State<Tracker> {
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Container(
-          height: 200,
-          width: 200,
-          child: WaterRipple(
-            count: 1,
-            color: widget.color,
-            frequency: widget.frequency,
-          )),
-      Container(
-        child: Compass(
-          current_lat: widget.current_Lat,
-          current_lng: widget.current_Lng,
-        ),
-      ),
-    ]);
-  }
-}
-
-// Pulse Animation
-class WaterRipple extends StatefulWidget {
-  final int count;
-  final Color color;
-  final int frequency;
-  const WaterRipple({
-    Key? key,
-    this.count = 1,
-    this.color = Colors.white,
-    this.frequency = 5000,
-  }) : super(key: key);
-
-  @override
-  _WaterRippleState createState() => _WaterRippleState();
-}
-
-class _WaterRippleState extends State<WaterRipple>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-        vsync: this, duration: Duration(milliseconds: widget.frequency))
-      ..repeat();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return CustomPaint(
-          painter: WaterRipplePainter(_controller.value,
-              count: widget.count, color: widget.color),
-        );
-      },
+    return Compass(
+      current_lat: widget.current_Lat,
+      current_lng: widget.current_Lng,
     );
-  }
-}
-
-class WaterRipplePainter extends CustomPainter {
-  final double progress;
-  final int count;
-  final Color color;
-
-  Paint _paint = Paint()..style = PaintingStyle.fill;
-  WaterRipplePainter(this.progress,
-      {this.count = 3, this.color = const Color(0xFF0080ff)});
-  @override
-  void paint(Canvas canvas, Size size) {
-    double radius = min(size.width / 2, size.height / 2);
-    for (int i = count; i >= 0; i--) {
-      final double opacity = (1.0 - ((i + progress) / (count + 1)));
-      final Color _color = color.withOpacity(opacity);
-      _paint..color = _color;
-
-      double _radius = radius * ((i + progress) / (count + 1));
-
-      canvas.drawCircle(
-          Offset(size.width / 2, size.height / 2), _radius, _paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
   }
 }
 
@@ -142,6 +55,7 @@ class Compass extends StatefulWidget {
 
 class _CompassState extends State<Compass> {
   double _heading = 0;
+
   double getOffsetFromNorth(double currentLatitude, double currentLongitude,
       double targetLatitude, double targetLongitude) {
     var la_rad = cal.radians(currentLatitude);
