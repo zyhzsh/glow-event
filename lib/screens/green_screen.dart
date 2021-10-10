@@ -257,12 +257,10 @@ class FlowerState extends State<Flower> with SingleTickerProviderStateMixin {
 
   initState() {
     super.initState();
-    // Controller设置动画时长
-    // vsync设置一个TickerProvider，当前State 混合了SingleTickerProviderStateMixin就是一个TickerProvider
+
     controller = AnimationController(
         duration: Duration(seconds: widget.duration), vsync: this //
         );
-    // Tween设置动画的区间值，animate()方法传入一个Animation，AnimationController继承Animation
     animation = new Tween(begin: widget.beginSize, end: widget.endSize)
         .animate(controller);
     controller.repeat(reverse: true);
