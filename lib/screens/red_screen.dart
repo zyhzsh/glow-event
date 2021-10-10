@@ -66,6 +66,10 @@ class _RedZoneScreenState extends State<RedZoneScreen> {
       body: Center(
         child: Container(
           decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("images/smog.png"),
+                fit: BoxFit.cover,
+              ),
               gradient: LinearGradient(
                   begin: Alignment(1.0, -5),
                   end: Alignment(-1.0, 3),
