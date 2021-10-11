@@ -110,9 +110,11 @@ class _GlowAppState extends State<GlowApp> {
   void _onLocationChanged(Location location) {
     //New location loaded, reset the offset for the direction
     setState(() {
-      distance = _calDistanceInMeter();
-      _current_Lat = location.latitude;
-      _current_Lng = location.longitude;
+      if (this.mounted) {
+        distance = _calDistanceInMeter();
+        _current_Lat = location.latitude;
+        _current_Lng = location.longitude;
+      }
     });
   }
 

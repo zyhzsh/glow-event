@@ -104,7 +104,7 @@ class _CompassState extends State<Compass> {
     var offset = getOffsetFromNorth(widget.current_lat, widget.current_lng,
         widget.center_Lat, widget.center_Lng);
     var offsetAngle = -2 * pi * (x - offset) / 360;
-    if (mounted) {
+    if (this.mounted) {
       setState(() {
         _heading = offsetAngle;
       });
