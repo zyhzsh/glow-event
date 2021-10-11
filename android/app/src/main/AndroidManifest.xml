@@ -4,9 +4,13 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- The INTERNET permission is required for development. Specifically,
+     flutter needs it to communicate with the running application
+     to allow setting breakpoints, to provide hot reload, etc.
+-->
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="Glow 2021"
+        android:label="glow2021v1"
         android:icon="@mipmap/ic_launcher">
 
         <activity
