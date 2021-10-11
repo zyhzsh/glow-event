@@ -146,7 +146,7 @@ class _RedZoneScreenState extends State<RedZoneScreen> {
                       child: Container(
                         child: Tracker(
                           color: Colors.white,
-                          frequency: 1000,
+                          frequency: (1000),
                           current_Lat: widget.current_Lat,
                           current_Lng: widget.current_Lnt,
                         ),
