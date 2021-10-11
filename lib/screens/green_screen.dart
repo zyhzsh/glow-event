@@ -65,16 +65,6 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
               ],
             ),
           ),
-
-          // showModalBottomSheet(
-          //     backgroundColor: Colors.transparent,
-          //     isScrollControlled: true,
-          //     context: context,
-          //     builder: (context) => FractionallySizedBox(
-          //           heightFactor: 1,
-          //           child: Info(),
-          //         ));
-
           child: Container(
               padding: EdgeInsets.only(top: 8),
               child: new Image.asset(
