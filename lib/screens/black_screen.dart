@@ -21,40 +21,10 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.transparent,
-        onPressed: () => showDialog<String>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            backgroundColor: Colors.transparent,
-            title: const Text(
-              'Info Screen Black',
-              style: TextStyle(color: Colors.white),
-            ),
-            content: const Text(
-              'Information about the green Dutch footprint',
-              style: TextStyle(color: Colors.white),
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.pop(context, 'Close'),
-                child: const Text('Close'),
-              ),
-            ],
-          ),
-        ),
-        child: Container(
-            padding: EdgeInsets.only(top: 8),
-            child: new Image.asset(
-              'images/arrow-up.gif',
-              gaplessPlayback: false,
-            )),
-      ),
-      backgroundColor: Colors.black,
+       backgroundColor: Colors.black,
       body: Center(
         child: Text(
-          'You are currently out of the zones of Glow 2021',
+          'You are currently out of the zones of the Dutch Footprint', textAlign: TextAlign.center,
           style: new TextStyle(
               color: Colors.white,
               fontStyle: FontStyle.italic,
