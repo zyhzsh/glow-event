@@ -5,7 +5,7 @@ class GreenZoneScreen extends StatefulWidget {
   double current_Lat;
   double current_Lnt;
   num distance_to_center;
-  static bool showOnce = false;
+
   GreenZoneScreen({
     Key? key,
     this.current_Lat = 0.0,
@@ -41,10 +41,6 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (GreenZoneScreen.showOnce == false) {
-      Future.delayed(Duration.zero, () => showAlert(context));
-      GreenZoneScreen.showOnce = true;
-    }
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
