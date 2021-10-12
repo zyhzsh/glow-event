@@ -24,7 +24,7 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
        backgroundColor: Colors.black,
       body: Center(
         child: Text(
-          'You are currently out of the zones of the Dutch Footprint', textAlign: TextAlign.center,
+          'You are currently out of the Dutch Footprint', textAlign: TextAlign.center,
           style: new TextStyle(
               color: Colors.white,
               fontStyle: FontStyle.italic,
