@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:glow2021v1/bloc/geofence_bloc.dart';
@@ -98,9 +99,38 @@ class _GlowAppState extends State<GlowApp> {
   }
 
   num _calDistanceInMeter() {
-    num result = distanceUtil.SphericalUtil.computeDistanceBetween(
-        distanceUtil.LatLng(_center_Lat, _center_Lng),
-        distanceUtil.LatLng(_current_Lat, _current_Lng));
+    num distance_line1 = distanceUtil.PolygonUtil.distanceToLine(
+      distanceUtil.LatLng(_current_Lat, _current_Lng),
+      distanceUtil.LatLng(51.447409255917215, 5.456023922597575),
+      distanceUtil.LatLng(51.44849455555152, 5.456986835626296),
+    );
+    num distance_line2 = distanceUtil.PolygonUtil.distanceToLine(
+      distanceUtil.LatLng(_current_Lat, _current_Lng),
+      distanceUtil.LatLng(51.44849455555152, 5.456986835626296),
+      distanceUtil.LatLng(51.44865168574167, 5.457440128912996),
+    );
+    num distance_line3 = distanceUtil.PolygonUtil.distanceToLine(
+      distanceUtil.LatLng(_current_Lat, _current_Lng),
+      distanceUtil.LatLng(51.44865168574167, 5.457440128912996),
+      distanceUtil.LatLng(51.44764704614813, 5.458722224779638),
+    );
+    num distance_line4 = distanceUtil.PolygonUtil.distanceToLine(
+      distanceUtil.LatLng(_current_Lat, _current_Lng),
+      distanceUtil.LatLng(51.44764704614813, 5.458722224779638),
+      distanceUtil.LatLng(51.44691152228507, 5.458016803854036),
+    );
+    num distance_line5 = distanceUtil.PolygonUtil.distanceToLine(
+        distanceUtil.LatLng(_current_Lat, _current_Lng),
+        distanceUtil.LatLng(51.44691152228507, 5.458016803854036),
+        distanceUtil.LatLng(51.447409255917215, 5.456023922597575));
+    num result = [
+      distance_line1,
+      distance_line2,
+      distance_line3,
+      distance_line4,
+      distance_line5
+    ].reduce(min);
+    // print('distance to green zone: ${result}');
     return result;
   }
 
