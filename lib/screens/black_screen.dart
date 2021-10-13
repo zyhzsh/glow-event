@@ -31,17 +31,17 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
           builder: (BuildContext context) => AlertDialog(
             backgroundColor: Colors.transparent,
             title: const Text(
-              'Info Screen Black',
+              'U bent buiten de zones!',
               style: TextStyle(color: Colors.white),
             ),
             content: const Text(
-              'Information about the green Dutch footprint',
+              'Deze app brengt je naar de Nederlandse voetafdruk, namelijk de te grote voetafdruk van 4.9 hectare die Nederlanders nu gebruiken om te leven, maar als we eerlijk delen met de rest van de wereld, moet de voetafdruk veranderen naar 1,6 hectare. Dit kan door duurzaam samen te leven met de natuur.',
               style: TextStyle(color: Colors.white),
             ),
             actions: <Widget>[
               TextButton(
-                onPressed: () => Navigator.pop(context, 'Close'),
-                child: const Text('Close'),
+                onPressed: () => Navigator.pop(context, 'Sluiten'),
+                child: const Text('Sluiten'),
               ),
             ],
           ),
@@ -67,7 +67,7 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
                 padding: EdgeInsets.symmetric(
                     horizontal: HYSizeFit.setRpx(50), vertical: 10),
                 child: Text(
-                  'You are currently out of the zones of Glow 2021',
+                  'Volg de voetstap',
                   textAlign: TextAlign.center,
                   style: new TextStyle(
                       color: Colors.white,
@@ -89,7 +89,7 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
               ),
               SizedBox(height: HYSizeFit.setRpx(20)),
               Text(
-                'Distance to glow zone :\n ${widget.distance_to_center.toInt()} meters',
+                'Afstand naar de groene zone:\n ${widget.distance_to_center.toInt()} meters',
                 textAlign: TextAlign.center,
                 style: new TextStyle(
                     color: Colors.white,

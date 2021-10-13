@@ -41,17 +41,17 @@ class _RedZoneScreenState extends State<RedZoneScreen> {
           builder: (BuildContext context) => AlertDialog(
             backgroundColor: Colors.transparent,
             title: const Text(
-              'Info Screen Red',
+              'De Rode Voetafdruk',
               style: TextStyle(color: Colors.white),
             ),
             content: const Text(
-              'Information about the green Dutch footprint',
+              'Oeps… \n\nJe bent in de rode voetafdruk van 4.9 hectare, zoveel oppervlakte gebruikt de gemiddelde Nederlander om te leven, als wij eerlijk met de wereld delen, kunnen wij maar 1.6 hectare gebruiken.',
               style: TextStyle(color: Colors.white),
             ),
             actions: <Widget>[
               TextButton(
-                onPressed: () => Navigator.pop(context, 'Close'),
-                child: const Text('Close'),
+                onPressed: () => Navigator.pop(context, 'Sluiten'),
+                child: const Text('Sluiten'),
               ),
             ],
           ),
@@ -79,7 +79,7 @@ class _RedZoneScreenState extends State<RedZoneScreen> {
                 padding: EdgeInsets.symmetric(
                     horizontal: HYSizeFit.setRpx(50), vertical: 10),
                 child: Text(
-                  'You are currently in \n Red zone (4.9 hectares) ',
+                  'Je bent momenteel in de \n rode zone (4.9 hectare) ',
                   textAlign: TextAlign.center,
                   style: new TextStyle(
                       color: Colors.white,
@@ -106,7 +106,7 @@ class _RedZoneScreenState extends State<RedZoneScreen> {
               ),
               SizedBox(height: HYSizeFit.setRpx(20)),
               Text(
-                'Distance to glow zone :\n ${widget.distance_to_center.toInt()} meters',
+                ' Afstand naar de groene zone:\n ${widget.distance_to_center.toInt()} meters',
                 textAlign: TextAlign.center,
                 style: new TextStyle(
                     color: Colors.white,
