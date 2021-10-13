@@ -10,7 +10,7 @@
 -->
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="glow2021v1"
+        android:label="De Nederlandse Voetafdruk"
         android:icon="@mipmap/ic_launcher">
 
         <activity

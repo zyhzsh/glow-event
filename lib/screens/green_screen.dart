@@ -17,28 +17,6 @@ class GreenZoneScreen extends StatefulWidget {
 }
 
 class _GreenZoneScreenState extends State<GreenZoneScreen> {
-  void showAlert(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              backgroundColor: Colors.transparent,
-              title: const Text(
-                'Info Screen Green',
-                style: TextStyle(color: Colors.white),
-              ),
-              content: const Text(
-                'Information about the green Dutch footprint',
-                style: TextStyle(color: Colors.white),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () => Navigator.pop(context, 'Close'),
-                  child: const Text('Close'),
-                ),
-              ],
-            ));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,17 +28,17 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
             builder: (BuildContext context) => AlertDialog(
               backgroundColor: Colors.transparent,
               title: const Text(
-                'Info Screen Green',
+                'De Groene Voetafdruk',
                 style: TextStyle(color: Colors.white),
               ),
               content: const Text(
-                'Information about the green Dutch footprint',
+                'Je staat nu in de groende voetafdruk van 1.6 hectare, zoveel oppervlakte kunnen wij gebruiken om te leven. Dit kan als wij duurzaam samenleven met de natuur.',
                 style: TextStyle(color: Colors.white),
               ),
               actions: <Widget>[
                 TextButton(
-                  onPressed: () => Navigator.pop(context, 'Close'),
-                  child: const Text('Close'),
+                  onPressed: () => Navigator.pop(context, 'Sluiten'),
+                  child: const Text('Sluiten'),
                 ),
               ],
             ),
@@ -198,10 +176,10 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                       Container(
                         padding: EdgeInsets.symmetric(
                             horizontal: 20.0, vertical: 20.0),
-                        decoration:
-                            BoxDecoration(color: Colors.black.withOpacity(0.5)),
+                        // decoration:
+                        //     BoxDecoration(color: Colors.black.withOpacity(0.5)),
                         child: Text(
-                          'You\'re standing in the center.\n Yeah ~! raise your hand, let\'s celebrate.',
+                          'Gefeliciteerd, je staat in de groene voetafdruk!',
                           textAlign: TextAlign.center,
                           style: new TextStyle(
                               color: Colors.white,

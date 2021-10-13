@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:glow2021v1/tools/resize_tool.dart';
 import 'package:glow2021v1/widgets/geofence_widgets.dart';
 
 class GuidePage extends StatelessWidget {
@@ -10,7 +11,7 @@ class GuidePage extends StatelessWidget {
       body: Stack(
         children: [
           Container(
-            height: 463.72,
+            height: HYSizeFit.setHeight(2),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(22.0),
@@ -19,114 +20,160 @@ class GuidePage extends StatelessWidget {
                     fit: BoxFit.cover,
                     image: AssetImage('images/footprint_background_img.jpg'))),
           ),
-          SafeArea(
-            child: ConstrainedBox(
-              constraints: BoxConstraints.expand(),
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 0,
-                    left: 10,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
+          Stack(
+            children: [
+              Positioned(
+                top: HYSizeFit.setHeight(18),
+                left: HYSizeFit.setWidth(300),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: HYSizeFit.setHeight(9),
+                left: HYSizeFit.setWidth(50),
+                child: Container(
+                  child: Text('In order',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: HYSizeFit.setRpx(46),
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w500)),
+                ),
+              ),
+              Positioned(
+                top: HYSizeFit.setHeight(6),
+                left: HYSizeFit.setWidth(50),
+                child: Container(
+                  child: Text('To \nCreate \nThe \nBest \nExperience',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: HYSizeFit.setRpx(68),
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600)),
+                ),
+              ),
+              Positioned(
+                top: HYSizeFit.setHeight(2),
+                left: HYSizeFit.setWidth(50),
+                child: Container(
+                  width: HYSizeFit.setRpx(700),
+                  height: HYSizeFit.setRpx(800),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: HYSizeFit.setHeight(20),
                       ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 50,
-                    left: 20,
-                    child: Container(
-                      child: Text('In order',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 27.0,
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w500)),
-                    ),
-                  ),
-                  Positioned(
-                    top: 90,
-                    left: 20,
-                    child: Container(
-                      child: Text('To \nCreate \nThe \nBest \nExperience',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 45.55,
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w600)),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 270,
-                    left: 20,
-                    child: Container(
-                      child: Text('User of flashlight',
+                      Text('User of flashlight',
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 19,
+                              fontSize: HYSizeFit.setRpx(40),
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w600)),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 150,
-                    left: 20,
-                    child: Container(
-                      child: Text(
-                          'is simply dummy text of the printing and \ntypesetting'
-                          'industry. \n\nLorem Ipsum has been the industry\'s \nstandard'
+                      SizedBox(
+                        height: HYSizeFit.setHeight(100),
+                      ),
+                      Text(
+                          'is simply dummy text of the printing and type \nsetting'
+                          'industry is dummy text for the. \nLorem Ipsum has been the industry\'s \nstandard'
                           'dummy text ever since the 1500s.',
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 16,
+                              fontSize: HYSizeFit.setRpx(30),
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w300)),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 50.0,
-                    left: 20.0,
-                    child: TextButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.black,
-                        shadowColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(23.26)),
-                        padding: EdgeInsets.only(
-                            left: 32, right: 32, top: 18, bottom: 18),
+                      SizedBox(
+                        height: HYSizeFit.setHeight(50),
                       ),
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => new GlowApp()));
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Center(
-                              child: Text(
-                            'Let\'s Start! ',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 25.0,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w500),
-                          )),
-                          Icon(
-                            Icons.arrow_forward_outlined,
-                            color: Colors.white,
+                      SizedBox(
+                        width: HYSizeFit.setRpx(370),
+                        child: TextButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.black,
+                            shadowColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(23.26)),
+                            padding: EdgeInsets.only(
+                                left: HYSizeFit.setWidth(50),
+                                right: HYSizeFit.setWidth(50),
+                                top: HYSizeFit.setHeight(60),
+                                bottom: HYSizeFit.setHeight(60)),
                           ),
-                        ],
-                      ),
-                    ),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => new GlowApp()));
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                  child: Text(
+                                'Let\'s Start! ',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: HYSizeFit.setRpx(40),
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w500),
+                              )),
+                              Icon(
+                                Icons.arrow_forward_outlined,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+              // Positioned(
+              //   bottom: HYSizeFit.setRpx(100),
+              //   left: HYSizeFit.setRpx(30),
+              //   child: TextButton(
+              //     style: ElevatedButton.styleFrom(
+              //       primary: Colors.black,
+              //       shadowColor: Colors.white,
+              //       shape: RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.circular(23.26)),
+              //       padding: EdgeInsets.only(
+              //           left: HYSizeFit.setRpx(50),
+              //           right: HYSizeFit.setRpx(50),
+              //           top: HYSizeFit.setRpx(30),
+              //           bottom: HYSizeFit.setRpx(30)),
+              //     ),
+              //     onPressed: () {
+              //       Navigator.of(context).push(
+              //           MaterialPageRoute(builder: (context) => new GlowApp()));
+              //     },
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Center(
+              //             child: Text(
+              //           'Let\'s Start! ',
+              //           style: TextStyle(
+              //               color: Colors.white,
+              //               fontSize: HYSizeFit.setRpx(40),
+              //               fontFamily: 'Montserrat',
+              //               fontWeight: FontWeight.w500),
+              //         )),
+              //         Icon(
+              //           Icons.arrow_forward_outlined,
+              //           color: Colors.white,
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+            ],
           ),
         ],
       ),

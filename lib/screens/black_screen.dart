@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:glow2021v1/tools/resize_tool.dart';
 import 'package:glow2021v1/widgets/footprint_widgets.dart';
 import 'package:glow2021v1/widgets/pluse_widgets.dart';
 
@@ -20,19 +21,93 @@ class BlackZoneScreen extends StatefulWidget {
 class _BlackZoneScreenState extends State<BlackZoneScreen> {
   @override
   Widget build(BuildContext context) {
+    HYSizeFit.initialize(context);
     return Scaffold(
-       backgroundColor: Colors.black,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.transparent,
+        onPressed: () => showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            backgroundColor: Colors.transparent,
+            title: const Text(
+              'U bent buiten de zones!',
+              style: TextStyle(color: Colors.white),
+            ),
+            content: const Text(
+              'Deze app brengt je naar de Nederlandse voetafdruk, namelijk de te grote voetafdruk van 4.9 hectare die Nederlanders nu gebruiken om te leven, maar als we eerlijk delen met de rest van de wereld, moet de voetafdruk veranderen naar 1,6 hectare. Dit kan door duurzaam samen te leven met de natuur.',
+              style: TextStyle(color: Colors.white),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'Sluiten'),
+                child: const Text('Sluiten'),
+              ),
+            ],
+          ),
+        ),
+        child: Container(
+            padding: EdgeInsets.only(top: 8),
+            child: new Image.asset(
+              'images/arrow-up.gif',
+              gaplessPlayback: false,
+            )),
+      ),
       body: Center(
-        child: Text(
-          'You are currently out of the Dutch Footprint', textAlign: TextAlign.center,
-          style: new TextStyle(
-              color: Colors.white,
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
-              letterSpacing: 0.8,
-              wordSpacing: 1,
-              fontFamily: 'Times new Roman'),
+        child: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment(1.0, -5),
+                  end: Alignment(-1.0, 3),
+                  colors: [Color(0xff737373), Color(0xff0E181A)])),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: HYSizeFit.setRpx(50), vertical: 10),
+                child: Text(
+                  'Volg de voetstap',
+                  textAlign: TextAlign.center,
+                  style: new TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: HYSizeFit.setRpx(40),
+                      letterSpacing: 0.8,
+                      wordSpacing: 1,
+                      fontFamily: 'Montserrat'),
+                ),
+              ),
+              Container(
+                height: HYSizeFit.setRpx(350),
+                width: HYSizeFit.setRpx(350),
+                child: PulseEffect_B(
+                  glowColor: Colors.green.shade50,
+                  backcolor: Color(0xff0E181A),
+                  frequency: 3000,
+                ),
+              ),
+              SizedBox(height: HYSizeFit.setRpx(20)),
+              Text(
+                'Afstand naar de groene zone:\n ${widget.distance_to_center.toInt()} meters',
+                textAlign: TextAlign.center,
+                style: new TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: HYSizeFit.setRpx(40),
+                    letterSpacing: 0.8,
+                    wordSpacing: 1,
+                    fontFamily: 'Montserrat'),
+              ),
+              SizedBox(width: 10.0, height: HYSizeFit.setRpx(30)),
+              Tracker(
+                color: Colors.white,
+                frequency: 10000,
+                current_Lat: widget.current_Lat,
+                current_Lng: widget.current_Lnt,
+              ),
+            ],
+          ),
         ),
       ),
     );
