@@ -25,17 +25,6 @@ class _RedZoneScreenState extends State<RedZoneScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.transparent,
-        //Back-Up options
-        // onPressed: () {
-        //   showModalBottomSheet(
-        //       backgroundColor: Colors.transparent,
-        //       isScrollControlled: true,
-        //       context: context,
-        //       builder: (context) => FractionallySizedBox(
-        //             heightFactor: 1,
-        //             child: Info(),
-        //           ));
-        // },
         onPressed: () => showDialog<String>(
           context: context,
           builder: (BuildContext context) => AlertDialog(
@@ -127,60 +116,6 @@ class _RedZoneScreenState extends State<RedZoneScreen> {
           ),
         ),
       ),
-
-      // body: Scaffold(
-      //     backgroundColor: Color(0xFFEC101A),
-      //     body: Stack(
-      //       children: [
-      //         Positioned(
-      //           top: 370,
-      //           left: 80,
-      //           width: 250,
-      //           height: 250,
-      //           child: Row(
-      //             children: [
-      //               Expanded(
-      //                   child: Align(
-      //                 alignment: FractionalOffset.bottomCenter,
-      //                 child: Container(
-      //                   child: Tracker(
-      //                     color: Colors.white,
-      //                     frequency: (1000),
-      //                     current_Lat: widget.current_Lat,
-      //                     current_Lng: widget.current_Lnt,
-      //                   ),
-      //                   height: 120.0,
-      //                 ),
-      //               ))
-      //             ],
-      //           ),
-      //         ),
-      //         Positioned(
-      //           top: 150,
-      //           left: 80,
-      //           width: 250,
-      //           height: 250,
-      //           child: Center(
-      //             child: PulseEffect_B(
-      //               glowColor: Colors.red.shade50,
-      //               backcolor: Color(0xFFEC101A),
-      //               frequency: 2000,
-      //             ),
-      //           ),
-      //         ),
-      //         Positioned(
-      //             top: 420,
-      //             left: 80,
-      //             width: 270,
-      //             height: 250,
-      //             child: Text(
-      //               "Distance to centre of the green zone: ${widget.distance_to_center.toInt()} metres",
-      //               textAlign: TextAlign.center,
-      //               style: TextStyle(
-      //                   fontWeight: FontWeight.bold, height: 1.5, fontSize: 18),
-      //             )),
-      //       ],
-      //     )),
     );
   }
 }

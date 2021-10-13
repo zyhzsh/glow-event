@@ -1,9 +1,9 @@
 import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:glow2021v1/widgets/pluse_widgets.dart';
-import 'package:vector_math/vector_math.dart' as cal;
 import 'package:flutter_compass/flutter_compass.dart';
+import 'package:vector_math/vector_math.dart' as cal;
 
 class Tracker extends StatefulWidget {
   final Color color;
@@ -39,8 +39,6 @@ class Compass extends StatefulWidget {
   final double center_Lat;
   final double center_Lng;
   // Green Zone Center : 51.447717, 5.456978
-  // Fontys Building Test Center : 51.450744, 5.454335
-  // Testing Location : 51.560136, 5.056212
   Compass(
       {Key? key,
       this.current_lat = 0,

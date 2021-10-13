@@ -134,45 +134,6 @@ class GuidePage extends StatelessWidget {
                   ),
                 ),
               ),
-              // Positioned(
-              //   bottom: HYSizeFit.setRpx(100),
-              //   left: HYSizeFit.setRpx(30),
-              //   child: TextButton(
-              //     style: ElevatedButton.styleFrom(
-              //       primary: Colors.black,
-              //       shadowColor: Colors.white,
-              //       shape: RoundedRectangleBorder(
-              //           borderRadius: BorderRadius.circular(23.26)),
-              //       padding: EdgeInsets.only(
-              //           left: HYSizeFit.setRpx(50),
-              //           right: HYSizeFit.setRpx(50),
-              //           top: HYSizeFit.setRpx(30),
-              //           bottom: HYSizeFit.setRpx(30)),
-              //     ),
-              //     onPressed: () {
-              //       Navigator.of(context).push(
-              //           MaterialPageRoute(builder: (context) => new GlowApp()));
-              //     },
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         Center(
-              //             child: Text(
-              //           'Let\'s Start! ',
-              //           style: TextStyle(
-              //               color: Colors.white,
-              //               fontSize: HYSizeFit.setRpx(40),
-              //               fontFamily: 'Montserrat',
-              //               fontWeight: FontWeight.w500),
-              //         )),
-              //         Icon(
-              //           Icons.arrow_forward_outlined,
-              //           color: Colors.white,
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ],

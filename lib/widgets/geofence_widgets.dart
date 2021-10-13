@@ -16,8 +16,6 @@ class GlowApp extends StatefulWidget {
 
 class _GlowAppState extends State<GlowApp> {
   // Green Zone Center : 51.447717, 5.456978
-  // Fontys Building Test Center : 51.450744, 5.454335
-  // Testing Location : 51.560136, 5.056212
   // Pointer to center Location variable
   final double _center_Lat = 51.447717;
   final double _center_Lng = 5.456978;
