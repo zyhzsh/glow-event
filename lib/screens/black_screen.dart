@@ -67,7 +67,7 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
               gradient: LinearGradient(
                   begin: Alignment(1.0, -5),
                   end: Alignment(-1.0, 3),
-                  colors: [Color(0xff737373), Color(0xff0E181A)])),
+                  colors: [Color(0xff141617), Color(0xff39444F)])),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

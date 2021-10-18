@@ -117,7 +117,7 @@ class _CompassState extends State<Compass> {
       child: Center(
           child: Container(
         height: 120,
-        child: Image.asset('images/footprint-fixed.png'),
+        child: Image.asset('images/w-footprint.png'),
       )),
     ));
   }
