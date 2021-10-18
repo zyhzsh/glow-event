@@ -1,15 +1,14 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:glow2021v1/bloc/geofence_bloc.dart';
 import 'package:glow2021v1/screens/black_screen.dart';
 import 'package:glow2021v1/screens/green_screen.dart';
 import 'package:glow2021v1/screens/red_screen.dart';
+import 'package:lamp/lamp.dart';
 import 'package:maps_toolkit/maps_toolkit.dart' as distanceUtil;
 import 'package:poly_geofence_service/poly_geofence_service.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:lamp/lamp.dart';
 
 class GlowApp extends StatefulWidget {
   @override
@@ -178,13 +177,17 @@ class _GlowAppState extends State<GlowApp> {
                 builder: (context, state) {
                   if (state is CurrentGeofence) {
                     if (state.id == null || state.id == 'black') {
-                      Lamp.turnOff();
+                      if (Lamp.hasLamp != null) {
+                        Lamp.turnOff();
+                      }
                       return BlackZoneScreen(
                           current_Lat: _current_Lat,
                           current_Lnt: _current_Lng,
                           distance_to_center: distance); // Black Screen
                     } else if (state.id == 'Green Zone') {
-                      Lamp.turnOff();
+                      if (Lamp.hasLamp != null) {
+                        Lamp.turnOn();
+                      }
                       return Stack(children: [
                         GreenZoneScreen(
                             current_Lat: _current_Lat,
@@ -192,7 +195,9 @@ class _GlowAppState extends State<GlowApp> {
                             distance_to_center: distance)
                       ]);
                     } else {
-                      Lamp.turnOff();
+                      if (Lamp.hasLamp != null) {
+                        Lamp.turnOff();
+                      }
                       return RedZoneScreen(
                           current_Lat: _current_Lat,
                           current_Lnt: _current_Lng,

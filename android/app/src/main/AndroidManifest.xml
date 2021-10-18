@@ -10,6 +10,8 @@
      to allow setting breakpoints, to provide hot reload, etc.
 -->
     <uses-permission android:name="android.permission.INTERNET"/>
+
+
    <application
         android:label="De Nederlandse Voetafdruk"
         android:icon="@mipmap/ic_launcher">
