@@ -18,7 +18,7 @@ class GuidePage extends StatelessWidget {
                     bottomLeft: Radius.circular(22.0)),
                 image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage('images/footprint_background_img.jpg'))),
+                    image: AssetImage('images/foot-print-background-v2.JPG'))),
           ),
           Stack(
             children: [

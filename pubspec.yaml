@@ -29,6 +29,9 @@ dependencies:
   #flutter_compass: ^0.7.0
   flutter_compass: ^0.3.4
   maps_toolkit: ^2.0.0
+  lamp:
+    git:
+      url: https://github.com/a805429509/flutter_lamp.git
 
   flutter:
     sdk: flutter

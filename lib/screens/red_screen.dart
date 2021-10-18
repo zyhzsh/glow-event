@@ -35,12 +35,17 @@ class _RedZoneScreenState extends State<RedZoneScreen> {
             ),
             content: const Text(
               'Oeps… \n\nJe bent in de rode voetafdruk van 4.9 hectare, zoveel oppervlakte gebruikt de gemiddelde Nederlander om te leven, als wij eerlijk met de wereld delen, kunnen wij maar 1.6 hectare gebruiken.',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(fontFamily: 'Montserrat', color: Colors.white),
             ),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.pop(context, 'Sluiten'),
-                child: const Text('Sluiten'),
+                child: const Text(
+                  'Sluiten',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                  ),
+                ),
               ),
             ],
           ),

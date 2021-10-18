@@ -32,16 +32,27 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
             backgroundColor: Colors.transparent,
             title: const Text(
               'U bent buiten de zones!',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'Montserrat',
+              ),
             ),
             content: const Text(
-              'Deze app brengt je naar de Nederlandse voetafdruk, namelijk de te grote voetafdruk van 4.9 hectare die Nederlanders nu gebruiken om te leven, maar als we eerlijk delen met de rest van de wereld, moet de voetafdruk veranderen naar 1,6 hectare. Dit kan door duurzaam samen te leven met de natuur.',
-              style: TextStyle(color: Colors.white),
+              'Deze app brengt je naar de Nederlandse voetafdruk.De voetafdruk van 5 hectare die Nederlanders gebruiken om te leven.Als we eerlijk delen met de rest van de wereld gebruiken we 1,6 hectare.Dat kan door duurzaam samen te leven met de natuur.',
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'Montserrat',
+              ),
             ),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.pop(context, 'Sluiten'),
-                child: const Text('Sluiten'),
+                child: const Text(
+                  'Sluiten',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                  ),
+                ),
               ),
             ],
           ),

@@ -29,16 +29,27 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
               backgroundColor: Colors.transparent,
               title: const Text(
                 'De Groene Voetafdruk',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Montserrat',
+                ),
               ),
               content: const Text(
                 'Je staat nu in de groende voetafdruk van 1.6 hectare, zoveel oppervlakte kunnen wij gebruiken om te leven. Dit kan als wij duurzaam samenleven met de natuur.',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Montserrat',
+                ),
               ),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Sluiten'),
-                  child: const Text('Sluiten'),
+                  child: const Text(
+                    'Sluiten',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                    ),
+                  ),
                 ),
               ],
             ),

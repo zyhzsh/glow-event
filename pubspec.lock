@@ -135,6 +135,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3"
+  lamp:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "0cc783b3889e835c6be1ba77864cbcb721f43215"
+      url: "https://github.com/a805429509/flutter_lamp.git"
+    source: git
+    version: "0.0.6"
   location:
     dependency: "direct main"
     description:
