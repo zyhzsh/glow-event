@@ -46,11 +46,11 @@ class _RedZoneScreenState extends State<RedZoneScreen> {
           ),
         ),
         child: Container(
-            padding: EdgeInsets.only(top: 8),
-            child: new Image.asset(
-              'images/arrow-up.gif',
-              gaplessPlayback: false,
-            )),
+          padding: EdgeInsets.only(top: 8),
+          child: Icon(
+            Icons.info_outlined,
+          ),
+        ),
       ),
 
       //Back - up Options

@@ -47,11 +47,11 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
           ),
         ),
         child: Container(
-            padding: EdgeInsets.only(top: 8),
-            child: new Image.asset(
-              'images/arrow-up.gif',
-              gaplessPlayback: false,
-            )),
+          padding: EdgeInsets.only(top: 8),
+          child: Icon(
+            Icons.info_outlined,
+          ),
+        ),
       ),
       body: Center(
         child: Container(
