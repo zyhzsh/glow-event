@@ -34,7 +34,7 @@ class _RedZoneScreenState extends State<RedZoneScreen> {
               style: TextStyle(color: Colors.white),
             ),
             content: const Text(
-              'Oeps… \n\nJe bent in de rode voetafdruk van 4.9 hectare, zoveel oppervlakte gebruikt de gemiddelde Nederlander om te leven, als wij eerlijk met de wereld delen, kunnen wij maar 1.6 hectare gebruiken.',
+              'Oeps… \n\nJe bent in de rode voetafdruk van 5 hectare, zoveel oppervlakte gebruikt de gemiddelde Nederlander om te leven, als wij eerlijk met de wereld delen, kunnen wij maar 1.6 hectare gebruiken.',
               style: TextStyle(fontFamily: 'Montserrat', color: Colors.white),
             ),
             actions: <Widget>[
@@ -73,7 +73,7 @@ class _RedZoneScreenState extends State<RedZoneScreen> {
                 padding: EdgeInsets.symmetric(
                     horizontal: HYSizeFit.setRpx(50), vertical: 10),
                 child: Text(
-                  'Je bent momenteel in de \n rode zone (4.9 hectare) ',
+                  'Je bent momenteel in de \n rode zone (5 hectare) ',
                   textAlign: TextAlign.center,
                   style: new TextStyle(
                       color: Colors.white,
