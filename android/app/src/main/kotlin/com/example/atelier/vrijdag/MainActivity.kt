@@ -1,4 +1,4 @@
-package com.example.glow2021v1
+package com.atelier.vrijdag
 
 import io.flutter.embedding.android.FlutterActivity
 

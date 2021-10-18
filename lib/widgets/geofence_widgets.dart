@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:glow2021v1/bloc/geofence_bloc.dart';
@@ -102,6 +103,7 @@ class _GlowAppState extends State<GlowApp> {
     num result = distanceUtil.SphericalUtil.computeDistanceBetween(
         distanceUtil.LatLng(_center_Lat, _center_Lng),
         distanceUtil.LatLng(_current_Lat, _current_Lng));
+    // print('distance to green zone: ${result}');
     return result;
   }
 
@@ -149,54 +151,57 @@ class _GlowAppState extends State<GlowApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // A widget used when you want to start a foreground task when trying to minimize or close the app.
-      // Declare on top of the [Scaffold] widget.
-      home: WillStartForegroundTask(
-          onWillStart: () {
-            // You can add a foreground task start condition.
-            return _polyGeofenceService.isRunningService;
-          },
-          androidNotificationOptions: AndroidNotificationOptions(
-            channelId: 'geofence_service_notification_channel',
-            channelName: 'Geofence Service Notification',
-            channelDescription:
-                'This notification appears when the geofence service is running in the background.',
-            channelImportance: NotificationChannelImportance.LOW,
-            priority: NotificationPriority.LOW,
-          ),
-          iosNotificationOptions:
-              IOSNotificationOptions(showNotification: true, playSound: true),
-          notificationTitle: 'Geofence Service is running',
-          notificationText: 'Tap to return to the app',
-          child: BlocBuilder(
-              bloc: _geofenceBloc,
-              builder: (context, state) {
-                if (state is CurrentGeofence) {
-                  if (state.id == null || state.id == 'black') {
-                    Lamp.turnOff();
-                    return BlackZoneScreen(
-                        current_Lat: _current_Lat,
-                        current_Lnt: _current_Lng,
-                        distance_to_center: distance); // Black Screen
-                  } else if (state.id == 'Green Zone') {
-                    Lamp.turnOn();
-                    return Stack(children: [
-                      GreenZoneScreen(
+    return new WillPopScope(
+      onWillPop: () async => false,
+      child: MaterialApp(
+        // A widget used when you want to start a foreground task when trying to minimize or close the app.
+        // Declare on top of the [Scaffold] widget.
+        home: WillStartForegroundTask(
+            onWillStart: () {
+              // You can add a foreground task start condition.
+              return _polyGeofenceService.isRunningService;
+            },
+            androidNotificationOptions: AndroidNotificationOptions(
+              channelId: 'geofence_service_notification_channel',
+              channelName: 'Geofence Service Notification',
+              channelDescription:
+                  'This notification appears when the geofence service is running in the background.',
+              channelImportance: NotificationChannelImportance.LOW,
+              priority: NotificationPriority.LOW,
+            ),
+            iosNotificationOptions:
+                IOSNotificationOptions(showNotification: true, playSound: true),
+            notificationTitle: 'Geofence Service is running',
+            notificationText: 'Tap to return to the app',
+            child: BlocBuilder(
+                bloc: _geofenceBloc,
+                builder: (context, state) {
+                  if (state is CurrentGeofence) {
+                    if (state.id == null || state.id == 'black') {
+                      Lamp.turnOff();
+                      return BlackZoneScreen(
                           current_Lat: _current_Lat,
                           current_Lnt: _current_Lng,
-                          distance_to_center: distance)
-                    ]);
-                  } else {
-                    Lamp.turnOff();
-                    return RedZoneScreen(
-                        current_Lat: _current_Lat,
-                        current_Lnt: _current_Lng,
-                        distance_to_center: distance);
-                  } // Red Screen
-                } else //Error or Empty Screen...
-                  return Scaffold();
-              })),
+                          distance_to_center: distance); // Black Screen
+                    } else if (state.id == 'Green Zone') {
+                      Lamp.turnOff();
+                      return Stack(children: [
+                        GreenZoneScreen(
+                            current_Lat: _current_Lat,
+                            current_Lnt: _current_Lng,
+                            distance_to_center: distance)
+                      ]);
+                    } else {
+                      Lamp.turnOff();
+                      return RedZoneScreen(
+                          current_Lat: _current_Lat,
+                          current_Lnt: _current_Lng,
+                          distance_to_center: distance);
+                    } // Red Screen
+                  } else //Error or Empty Screen...
+                    return Scaffold();
+                })),
+      ),
     );
   }
 
