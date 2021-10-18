@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:glow2021v1/bloc/geofence_bloc.dart';
@@ -99,10 +100,37 @@ class _GlowAppState extends State<GlowApp> {
   }
 
   num _calDistanceInMeter() {
-    num result = distanceUtil.SphericalUtil.computeDistanceBetween(
-        distanceUtil.LatLng(_center_Lat, _center_Lng),
-        distanceUtil.LatLng(_current_Lat, _current_Lng));
-    // print('distance to green zone: ${result}');
+    num edge_line_1 = distanceUtil.PolygonUtil.distanceToLine(
+      distanceUtil.LatLng(_current_Lat, _current_Lng),
+      distanceUtil.LatLng(51.447409255917215, 5.456023922597575),
+      distanceUtil.LatLng(51.44849455555152, 5.456986835626296),
+    );
+    num edge_line_2 = distanceUtil.PolygonUtil.distanceToLine(
+      distanceUtil.LatLng(_current_Lat, _current_Lng),
+      distanceUtil.LatLng(51.44849455555152, 5.456986835626296),
+      distanceUtil.LatLng(51.44865168574167, 5.457440128912996),
+    );
+    num edge_line_3 = distanceUtil.PolygonUtil.distanceToLine(
+      distanceUtil.LatLng(_current_Lat, _current_Lng),
+      distanceUtil.LatLng(51.44865168574167, 5.457440128912996),
+      distanceUtil.LatLng(51.44764704614813, 5.458722224779638),
+    );
+    num edge_line_4 = distanceUtil.PolygonUtil.distanceToLine(
+      distanceUtil.LatLng(_current_Lat, _current_Lng),
+      distanceUtil.LatLng(51.44764704614813, 5.458722224779638),
+      distanceUtil.LatLng(51.44691152228507, 5.458016803854036),
+    );
+    num edge_line_5 = distanceUtil.PolygonUtil.distanceToLine(
+        distanceUtil.LatLng(_current_Lat, _current_Lng),
+        distanceUtil.LatLng(51.44691152228507, 5.458016803854036),
+        distanceUtil.LatLng(51.447409255917215, 5.456023922597575));
+    num result = [
+      edge_line_1,
+      edge_line_2,
+      edge_line_3,
+      edge_line_4,
+      edge_line_5
+    ].reduce(min);
     return result;
   }
 
@@ -155,57 +183,40 @@ class _GlowAppState extends State<GlowApp> {
       child: MaterialApp(
         // A widget used when you want to start a foreground task when trying to minimize or close the app.
         // Declare on top of the [Scaffold] widget.
-        home: WillStartForegroundTask(
-            onWillStart: () {
-              // You can add a foreground task start condition.
-              return _polyGeofenceService.isRunningService;
-            },
-            androidNotificationOptions: AndroidNotificationOptions(
-              channelId: 'geofence_service_notification_channel',
-              channelName: 'Geofence Service Notification',
-              channelDescription:
-                  'This notification appears when the geofence service is running in the background.',
-              channelImportance: NotificationChannelImportance.LOW,
-              priority: NotificationPriority.LOW,
-            ),
-            iosNotificationOptions:
-                IOSNotificationOptions(showNotification: true, playSound: true),
-            notificationTitle: 'Geofence Service is running',
-            notificationText: 'Tap to return to the app',
-            child: BlocBuilder(
-                bloc: _geofenceBloc,
-                builder: (context, state) {
-                  if (state is CurrentGeofence) {
-                    if (state.id == null || state.id == 'black') {
-                      // if (Lamp.hasLamp != null) {
-                      //   Lamp.turnOff();
-                      // }
-                      return BlackZoneScreen(
-                          current_Lat: _current_Lat,
-                          current_Lnt: _current_Lng,
-                          distance_to_center: distance); // Black Screen
-                    } else if (state.id == 'Green Zone') {
-                      // if (Lamp.hasLamp != null) {
-                      //   Lamp.turnOn();
-                      // }
-                      return Stack(children: [
-                        GreenZoneScreen(
-                            current_Lat: _current_Lat,
-                            current_Lnt: _current_Lng,
-                            distance_to_center: distance)
-                      ]);
-                    } else {
-                      // if (Lamp.hasLamp != null) {
-                      //   Lamp.turnOff();
-                      // }
-                      return RedZoneScreen(
-                          current_Lat: _current_Lat,
-                          current_Lnt: _current_Lng,
-                          distance_to_center: distance);
-                    } // Red Screen
-                  } else //Error or Empty Screen...
-                    return Scaffold();
-                })),
+        home: BlocBuilder(
+            bloc: _geofenceBloc,
+            builder: (context, state) {
+              if (state is CurrentGeofence) {
+                if (state.id == null || state.id == 'black') {
+                  if (Lamp.hasLamp != null) {
+                    Lamp.turnOff();
+                  }
+                  return BlackZoneScreen(
+                      current_Lat: _current_Lat,
+                      current_Lnt: _current_Lng,
+                      distance_to_center: distance); // Black Screen
+                } else if (state.id == 'Green Zone') {
+                  if (Lamp.hasLamp != null) {
+                    Lamp.turnOn();
+                  }
+                  return Stack(children: [
+                    GreenZoneScreen(
+                        current_Lat: _current_Lat,
+                        current_Lnt: _current_Lng,
+                        distance_to_center: distance)
+                  ]);
+                } else {
+                  if (Lamp.hasLamp != null) {
+                    Lamp.turnOff();
+                  }
+                  return RedZoneScreen(
+                      current_Lat: _current_Lat,
+                      current_Lnt: _current_Lng,
+                      distance_to_center: distance);
+                } // Red Screen
+              } else //Error or Empty Screen...
+                return Scaffold();
+            }),
       ),
     );
   }

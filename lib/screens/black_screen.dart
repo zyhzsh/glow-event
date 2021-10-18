@@ -24,8 +24,7 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
     HYSizeFit.initialize(context);
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.transparent,
+      floatingActionButton: IconButton(
         onPressed: () => showDialog<String>(
           context: context,
           builder: (BuildContext context) => AlertDialog(
@@ -57,11 +56,9 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
             ],
           ),
         ),
-        child: Container(
-          padding: EdgeInsets.only(top: 8),
-          child: Icon(
-            Icons.info_outlined,
-          ),
+        icon: Icon(
+          Icons.info_outlined,
+          color: Colors.white,
         ),
       ),
       body: Center(

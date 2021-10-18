@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:glow2021v1/tools/resize_tool.dart';
 import 'package:glow2021v1/widgets/geofence_widgets.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-class GuidePage extends StatelessWidget {
-  const GuidePage({Key? key}) : super(key: key);
+class GuidePage extends StatefulWidget {
+  @override
+  _GuidePageState createState() => _GuidePageState();
+}
+
+class _GuidePageState extends State<GuidePage> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,12 +121,7 @@ class GuidePage extends StatelessWidget {
                                         top: HYSizeFit.setHeight(60),
                                         bottom: HYSizeFit.setHeight(60)),
                                   ),
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                new GlowApp()));
-                                  },
+                                  onPressed: () => _openGlowApp(context),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -152,8 +156,24 @@ class GuidePage extends StatelessWidget {
       ),
     );
   }
-}
 
-// onPressed: () {
-// Navigator.pop(context);
-// },
+  _openGlowApp(BuildContext context) async {
+    var location_permission = await Permission.location.status;
+    var flash_light = await Permission.camera.status;
+    if (location_permission.isDenied ||
+        flash_light.isDenied ||
+        location_permission.isPermanentlyDenied ||
+        flash_light.isPermanentlyDenied ||
+        location_permission.isRestricted ||
+        flash_light.isRestricted) {
+      await Permission.location.request();
+      await Permission.camera.request();
+    }
+    location_permission = await Permission.location.status;
+    flash_light = await Permission.camera.status;
+    if (location_permission.isGranted && flash_light.isGranted) {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => new GlowApp()));
+    }
+  }
+}
