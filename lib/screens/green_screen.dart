@@ -65,7 +65,7 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                     width: 200,
                     height: 200,
                     child: Flower(
-                      path: 'images/flower-1.png',
+                      path: 'images/Bloem1.png',
                     ),
                   ),
                   Positioned(
@@ -74,7 +74,7 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                     width: 200,
                     height: 200,
                     child: Flower(
-                      path: 'images/flower-2.png',
+                      path: 'images/Bloem2.png',
                     ),
                     //
                   ),
@@ -84,7 +84,7 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                     width: 200,
                     height: 200,
                     child: Flower(
-                      path: 'images/flower-3.png',
+                      path: 'images/Bloem3.png',
                       beginSize: 10.0,
                       endSize: 200.0,
                       duration: 7,
@@ -96,7 +96,7 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                     width: 200,
                     height: 200,
                     child: Flower(
-                      path: 'images/flower-4.png',
+                      path: 'images/Bloem4.png',
                     ),
                   ),
                   Positioned(
@@ -105,7 +105,7 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                     width: 100,
                     height: 200,
                     child: Flower(
-                      path: 'images/flower-5.png',
+                      path: 'images/Bloem5.png',
                       beginSize: 5.0,
                       endSize: 100.0,
                     ),
@@ -116,7 +116,7 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                     width: 100,
                     height: 200,
                     child: Flower(
-                      path: 'images/flower-6.png',
+                      path: 'images/Bloem6.png',
                       beginSize: 5.0,
                       endSize: 100.0,
                       duration: 3,
@@ -128,7 +128,7 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                     width: 100,
                     height: 200,
                     child: Flower(
-                      path: 'images/flower-7.png',
+                      path: 'images/Bloem7.png',
                       beginSize: 5.0,
                       endSize: 100.0,
                       duration: 3,
@@ -140,7 +140,7 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                     width: 100,
                     height: 200,
                     child: Flower(
-                      path: 'images/flower-8.png',
+                      path: 'images/Bloem8.png',
                       beginSize: 5.0,
                       endSize: 100.0,
                       duration: 3,
@@ -152,7 +152,7 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                     width: 120,
                     height: 200,
                     child: Flower(
-                      path: 'images/flower-9.png',
+                      path: 'images/Bloem9.png',
                       beginSize: 5.0,
                       endSize: 100.0,
                       duration: 3,
@@ -164,7 +164,43 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                     width: 120,
                     height: 200,
                     child: Flower(
-                      path: 'images/flower-10.png',
+                      path: 'images/Bloem10.png',
+                      beginSize: 5.0,
+                      endSize: 100.0,
+                      duration: 3,
+                    ),
+                  ),
+                  Positioned(
+                    top: 400,
+                    left: 40,
+                    width: 120,
+                    height: 200,
+                    child: Flower(
+                      path: 'images/Bloem11.png',
+                      beginSize: 5.0,
+                      endSize: 100.0,
+                      duration: 3,
+                    ),
+                  ),
+                  Positioned(
+                    top: 350,
+                    right: 20,
+                    width: 120,
+                    height: 200,
+                    child: Flower(
+                      path: 'images/Bloem12.png',
+                      beginSize: 5.0,
+                      endSize: 100.0,
+                      duration: 3,
+                    ),
+                  ),
+                  Positioned(
+                    top: 20,
+                    right: 100,
+                    width: 120,
+                    height: 200,
+                    child: Flower(
+                      path: 'images/Bloem13.png',
                       beginSize: 5.0,
                       endSize: 100.0,
                       duration: 3,
