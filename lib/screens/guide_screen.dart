@@ -69,9 +69,9 @@ class GuidePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: HYSizeFit.setHeight(20),
+                        height: HYSizeFit.setHeight(100),
                       ),
-                      Text('User of flashlight',
+                      Text('Uw gegevens',
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: HYSizeFit.setRpx(40),
@@ -80,56 +80,68 @@ class GuidePage extends StatelessWidget {
                       SizedBox(
                         height: HYSizeFit.setHeight(100),
                       ),
-                      Text(
-                          'is simply dummy text of the printing and type \nsetting'
-                          'industry is dummy text for the. \nLorem Ipsum has been the industry\'s \nstandard'
-                          'dummy text ever since the 1500s.',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: HYSizeFit.setRpx(30),
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w300)),
-                      SizedBox(
-                        height: HYSizeFit.setHeight(50),
-                      ),
-                      SizedBox(
-                        width: HYSizeFit.setRpx(370),
-                        child: TextButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.black,
-                            shadowColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(23.26)),
-                            padding: EdgeInsets.only(
-                                left: HYSizeFit.setWidth(50),
-                                right: HYSizeFit.setWidth(50),
-                                top: HYSizeFit.setHeight(60),
-                                bottom: HYSizeFit.setHeight(60)),
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => new GlowApp()));
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                      Expanded(
+                        flex: 1,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Center(
-                                  child: Text(
-                                'Let\'s Start! ',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: HYSizeFit.setRpx(40),
-                                    fontFamily: 'Montserrat',
-                                    fontWeight: FontWeight.w500),
-                              )),
-                              Icon(
-                                Icons.arrow_forward_outlined,
-                                color: Colors.white,
+                              Text(
+                                  'Om de app zo nauwkeurig mogelijk te houden, maken vragen wij toegang tot uw locatie die ook gecontroleerd wordt op de achtergrond. De instellingen hiervan kunt u altijd later nog aanpassen, maar voor de beste ervaring is het belangrijk dit aan te zetten. Naast de gegevens van uw locatie zal de app ook de zaklamp activeren wanneer u in de groene zone bent. Wanneer u dit niet wilt kunt u het altijd uitzetten.',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: HYSizeFit.setRpx(30),
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.w300)),
+                              SizedBox(
+                                height: HYSizeFit.setHeight(50),
                               ),
+                              SizedBox(
+                                width: HYSizeFit.setRpx(370),
+                                child: TextButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.black,
+                                    shadowColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(23.26)),
+                                    padding: EdgeInsets.only(
+                                        left: HYSizeFit.setWidth(50),
+                                        right: HYSizeFit.setWidth(50),
+                                        top: HYSizeFit.setHeight(60),
+                                        bottom: HYSizeFit.setHeight(60)),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                new GlowApp()));
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Center(
+                                          child: Text(
+                                        'Let\'s Start! ',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: HYSizeFit.setRpx(40),
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: FontWeight.w500),
+                                      )),
+                                      Icon(
+                                        Icons.arrow_forward_outlined,
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
                             ],
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
