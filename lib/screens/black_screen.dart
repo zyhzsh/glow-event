@@ -30,14 +30,18 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
           builder: (BuildContext context) => AlertDialog(
             backgroundColor: Colors.transparent,
             title: const Text(
-              'U bent buiten de zones!',
+              'Uitleg applicatie' ,
               style: TextStyle(
                 color: Colors.white,
+                fontWeight: FontWeight.bold,
                 fontFamily: 'Montserrat',
               ),
             ),
             content: const Text(
-              'Deze app brengt je naar de Nederlandse voetafdruk.De voetafdruk van 5 hectare die Nederlanders gebruiken om te leven.Als we eerlijk delen met de rest van de wereld gebruiken we 1,6 hectare.Dat kan door duurzaam samen te leven met de natuur.',
+              'Deze app brengt je naar de Nederlandse voetafdruk.\n\n'
+                  'De voetafdruk van 5 hectare die Nederlanders gebruiken om te leven. \n\n'
+                  'Als we eerlijk delen met de rest van de wereld gebruiken we 1,6 hectare. \n\n'
+                  'Dat kan door duurzaam samen te leven met de natuur.',
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: 'Montserrat',
