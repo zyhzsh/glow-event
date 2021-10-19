@@ -186,17 +186,17 @@ class _GlowAppState extends State<GlowApp> {
             builder: (context, state) {
               if (state is CurrentGeofence) {
                 if (state.id == null || state.id == 'black') {
-                  // if (Lamp.hasLamp != null) {
-                  //   Lamp.turnOff();
-                  // }
+                  if (Lamp.hasLamp != null) {
+                    Lamp.turnOff();
+                  }
                   return BlackZoneScreen(
                       current_Lat: _current_Lat,
                       current_Lnt: _current_Lng,
                       distance_to_center: distance); // Black Screen
                 } else if (state.id == 'Green Zone') {
-                  // if (Lamp.hasLamp != null) {
-                  //   Lamp.turnOn();
-                  // }
+                  if (Lamp.hasLamp != null) {
+                    Lamp.turnOn();
+                  }
                   return Stack(children: [
                     GreenZoneScreen(
                         current_Lat: _current_Lat,
@@ -204,9 +204,9 @@ class _GlowAppState extends State<GlowApp> {
                         distance_to_center: distance)
                   ]);
                 } else {
-                  // if (Lamp.hasLamp != null) {
-                  //   Lamp.turnOff();
-                  // }
+                  if (Lamp.hasLamp != null) {
+                    Lamp.turnOff();
+                  }
                   return RedZoneScreen(
                       current_Lat: _current_Lat,
                       current_Lnt: _current_Lng,
