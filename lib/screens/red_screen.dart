@@ -29,11 +29,13 @@ class _RedZoneScreenState extends State<RedZoneScreen> {
           builder: (BuildContext context) => AlertDialog(
             backgroundColor: Colors.transparent,
             title: const Text(
-              'De Rode Voetafdruk',
-              style: TextStyle(color: Colors.white),
+              'Oeps',
+              style: TextStyle(fontFamily: 'Montserrat',color: Colors.white),
             ),
             content: const Text(
-              'Oeps… \n\nJe bent in de rode voetafdruk van 5 hectare, zoveel oppervlakte gebruikt de gemiddelde Nederlander om te leven, als wij eerlijk met de wereld delen, kunnen wij maar 1.6 hectare gebruiken.',
+                  'Je bent in de rode voetafdruk van 5 hectare\n\n'
+                  ' zoveel oppervlakte gebruikt de gemiddelde Nederlander om te leven\n\n'
+                  ' als we eerlijk met de wereld delen, kunnen we maar 1.6 hectare gebruiken',
               style: TextStyle(fontFamily: 'Montserrat', color: Colors.white),
             ),
             actions: <Widget>[
