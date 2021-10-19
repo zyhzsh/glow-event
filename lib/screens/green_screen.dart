@@ -227,7 +227,7 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                         // decoration:
                         //     BoxDecoration(color: Colors.black.withOpacity(0.5)),
                         child: Text(
-                          'Gefeliciteerd, je staat in de groene voetafdruk!',
+                          'Gefeliciteerd! \n\n je staat in de groene voetafdruk!',
                           textAlign: TextAlign.center,
                           style: new TextStyle(
                               color: Colors.white,
