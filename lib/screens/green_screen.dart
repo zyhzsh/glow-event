@@ -27,14 +27,18 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
             builder: (BuildContext context) => AlertDialog(
               backgroundColor: Colors.transparent,
               title: const Text(
-                'De Groene Voetafdruk',
+                'Gefeliciteerd!',
                 style: TextStyle(
                   color: Colors.white,
                   fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w900
                 ),
               ),
               content: const Text(
-                'Je staat nu in de groende voetafdruk van 1.6 hectare, zoveel oppervlakte kunnen wij gebruiken om te leven. Dit kan als wij duurzaam samenleven met de natuur.',
+                'Je staat nu in de groene \n'
+                    ' voetafdruk van 1.6 hectare\n\n'
+                    ' zoveel oppervlakte kunnen we gebruiken om te leven\n\n'
+                    ' Dit kan als we duurzaam samenleven met de natuur',
                 style: TextStyle(
                   color: Colors.white,
                   fontFamily: 'Montserrat',

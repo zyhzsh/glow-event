@@ -30,7 +30,7 @@ class _RedZoneScreenState extends State<RedZoneScreen> {
             backgroundColor: Colors.transparent,
             title: const Text(
               'Oeps',
-              style: TextStyle(fontFamily: 'Montserrat',color: Colors.white),
+              style: TextStyle(fontFamily: 'Montserrat',color: Colors.white, fontWeight: FontWeight.w900),
             ),
             content: const Text(
                   'Je bent in de rode voetafdruk van 5 hectare\n\n'
