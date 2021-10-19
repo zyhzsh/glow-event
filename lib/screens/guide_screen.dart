@@ -22,6 +22,14 @@ class _GuidePageState extends State<GuidePage> {
           Container(
             height: HYSizeFit.setHeight(2),
             decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(1),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
                 borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(22.0),
                     bottomLeft: Radius.circular(22.0)),
