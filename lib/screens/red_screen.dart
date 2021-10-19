@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:glow2021v1/tools/resize_tool.dart';
 import 'package:glow2021v1/widgets/footprint_widgets.dart';
+import 'package:glow2021v1/widgets/information_widget.dart';
 import 'package:glow2021v1/widgets/pluse_widgets.dart';
 
 class RedZoneScreen extends StatefulWidget {
@@ -24,33 +25,18 @@ class _RedZoneScreenState extends State<RedZoneScreen> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: IconButton(
-        onPressed: () => showDialog<String>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            backgroundColor: Colors.transparent,
-            title: const Text(
-              'Oeps',
-              style: TextStyle(fontFamily: 'Montserrat',color: Colors.white, fontWeight: FontWeight.w900),
-            ),
-            content: const Text(
-                  'Je bent in de rode voetafdruk van 5 hectare\n\n'
-                  ' zoveel oppervlakte gebruikt de gemiddelde Nederlander om te leven\n\n'
-                  ' als we eerlijk met de wereld delen, kunnen we maar 1.6 hectare gebruiken',
-              style: TextStyle(fontFamily: 'Montserrat', color: Colors.white),
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.pop(context, 'Sluiten'),
-                child: const Text(
-                  'Sluiten',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        onPressed: () {
+          showModalBottomSheet(
+              backgroundColor: Colors.transparent,
+              isScrollControlled: true,
+              context: context,
+              builder: (context) => FractionallySizedBox(
+                    heightFactor: 0.8,
+                    child: Information(
+                      content: 'Red',
+                    ),
+                  ));
+        },
         icon: Icon(
           Icons.info_outlined,
           color: Colors.white,

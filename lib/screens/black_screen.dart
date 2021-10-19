@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:glow2021v1/tools/resize_tool.dart';
 import 'package:glow2021v1/widgets/footprint_widgets.dart';
+import 'package:glow2021v1/widgets/information_widget.dart';
 import 'package:glow2021v1/widgets/pluse_widgets.dart';
 
 class BlackZoneScreen extends StatefulWidget {
@@ -25,41 +26,18 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: IconButton(
-        onPressed: () => showDialog<String>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            backgroundColor: Colors.transparent,
-            title: const Text(
-              'Uitleg applicatie' ,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Montserrat',
-              ),
-            ),
-            content: const Text(
-              'Deze app brengt je naar de Nederlandse voetafdruk.\n\n'
-                  'De voetafdruk van 5 hectare die Nederlanders gebruiken om te leven. \n\n'
-                  'Als we eerlijk delen met de rest van de wereld gebruiken we 1,6 hectare. \n\n'
-                  'Dat kan door duurzaam samen te leven met de natuur.',
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Montserrat',
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.pop(context, 'Sluiten'),
-                child: const Text(
-                  'Sluiten',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        onPressed: () {
+          showModalBottomSheet(
+              backgroundColor: Colors.transparent,
+              isScrollControlled: true,
+              context: context,
+              builder: (context) => FractionallySizedBox(
+                    heightFactor: 0.8,
+                    child: Information(
+                      content: 'Black',
+                    ),
+                  ));
+        },
         icon: Icon(
           Icons.info_outlined,
           color: Colors.white,
@@ -87,7 +65,7 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
               SizedBox(height: HYSizeFit.setRpx(20)),
               Text(
                 'Volg de voetafdruk \n'
-                    'Afstand naar de groene zone:\n ${widget.distance_to_center.toInt()} meters',
+                'Afstand naar de groene zone:\n ${widget.distance_to_center.toInt()} meters',
                 textAlign: TextAlign.center,
                 style: new TextStyle(
                     color: Colors.white,
