@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:glow2021v1/widgets/information_widget.dart';
 
 class GreenZoneScreen extends StatefulWidget {
   double current_Lat;
@@ -22,37 +23,18 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: IconButton(
-          onPressed: () => showDialog<String>(
-            context: context,
-            builder: (BuildContext context) => AlertDialog(
-              backgroundColor: Colors.transparent,
-              title: const Text(
-                'De Groene Voetafdruk',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Montserrat',
-                ),
-              ),
-              content: const Text(
-                'Je staat nu in de groende voetafdruk van 1.6 hectare, zoveel oppervlakte kunnen wij gebruiken om te leven. Dit kan als wij duurzaam samenleven met de natuur.',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Montserrat',
-                ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () => Navigator.pop(context, 'Sluiten'),
-                  child: const Text(
-                    'Sluiten',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          onPressed: () {
+            showModalBottomSheet(
+                backgroundColor: Colors.transparent,
+                isScrollControlled: true,
+                context: context,
+                builder: (context) => FractionallySizedBox(
+                      heightFactor: 0.8,
+                      child: Information(
+                        content: 'Green',
+                      ),
+                    ));
+          },
           icon: Icon(
             Icons.info_outlined,
             color: Colors.white,

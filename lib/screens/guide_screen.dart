@@ -26,6 +26,8 @@ class _GuidePageState extends State<GuidePage> {
                     bottomRight: Radius.circular(22.0),
                     bottomLeft: Radius.circular(22.0)),
                 image: DecorationImage(
+                    colorFilter: ColorFilter.mode(
+                        Colors.black.withOpacity(0.5), BlendMode.darken),
                     fit: BoxFit.cover,
                     image: AssetImage('images/foot-print-background-v2.JPG'))),
           ),
@@ -48,7 +50,7 @@ class _GuidePageState extends State<GuidePage> {
                 top: HYSizeFit.setHeight(9),
                 left: HYSizeFit.setWidth(50),
                 child: Container(
-                  child: Text('In order',
+                  child: Text('Om zo',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: HYSizeFit.setRpx(46),
@@ -60,7 +62,7 @@ class _GuidePageState extends State<GuidePage> {
                 top: HYSizeFit.setHeight(6),
                 left: HYSizeFit.setWidth(50),
                 child: Container(
-                  child: Text('To \nCreate \nThe \nBest \nExperience',
+                  child: Text('De \nBeste \nErvaring \nTe \nCreëren',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: HYSizeFit.setRpx(68),
@@ -127,7 +129,7 @@ class _GuidePageState extends State<GuidePage> {
                                     children: [
                                       Center(
                                           child: Text(
-                                        'Let\'s Start! ',
+                                        'Beginnen ',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: HYSizeFit.setRpx(40),
