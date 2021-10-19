@@ -76,21 +76,6 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: HYSizeFit.setRpx(50), vertical: 10),
-                child: Text(
-                  'Volg de voetstap',
-                  textAlign: TextAlign.center,
-                  style: new TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: HYSizeFit.setRpx(40),
-                      letterSpacing: 0.8,
-                      wordSpacing: 1,
-                      fontFamily: 'Montserrat'),
-                ),
-              ),
-              Container(
                 height: HYSizeFit.setRpx(350),
                 width: HYSizeFit.setRpx(350),
                 child: PulseEffect_B(
@@ -101,7 +86,8 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
               ),
               SizedBox(height: HYSizeFit.setRpx(20)),
               Text(
-                'Afstand naar de groene zone:\n ${widget.distance_to_center.toInt()} meters',
+                'Volg de voetafdruk \n'
+                    'Afstand naar de groene zone:\n ${widget.distance_to_center.toInt()} meters',
                 textAlign: TextAlign.center,
                 style: new TextStyle(
                     color: Colors.white,
