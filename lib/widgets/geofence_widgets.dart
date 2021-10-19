@@ -1,15 +1,12 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:glow2021v1/bloc/geofence_bloc.dart';
 import 'package:glow2021v1/screens/black_screen.dart';
 import 'package:glow2021v1/screens/green_screen.dart';
 import 'package:glow2021v1/screens/red_screen.dart';
 import 'package:lamp/lamp.dart';
 import 'package:maps_toolkit/maps_toolkit.dart' as distanceUtil;
 import 'package:poly_geofence_service/poly_geofence_service.dart';
-import 'package:rxdart/rxdart.dart';
 
 class GlowApp extends StatefulWidget {
   @override
@@ -24,10 +21,9 @@ class _GlowAppState extends State<GlowApp> {
   double _current_Lng = 0;
   //Distance tracker
   num distance = 0;
+  UserLocationStatus userLocationStatus = UserLocationStatus.outsideZone;
 
-  //final _streamController = StreamController<PolyGeofence>();
-  StreamController<PolyGeofence> _streamController = BehaviorSubject();
-  GeofenceBloc _geofenceBloc = GeofenceBloc();
+  final _streamController = StreamController<PolyGeofence>();
 
   // Create a [PolyGeofenceService] instance and set options.
   final _polyGeofenceService = PolyGeofenceService.instance.setup(
@@ -44,20 +40,11 @@ class _GlowAppState extends State<GlowApp> {
       id: 'Red Zone',
       data: {'Red'},
       polygon: <LatLng>[
-        const LatLng(51.448316, 5.454186),
-        const LatLng(51.44916416512275, 5.4557594211801685),
-        const LatLng(51.44855570734108, 5.456918135510549),
-        const LatLng(51.44733208090987, 5.455662861711249),
-      ],
-    ),
-    PolyGeofence(
-      id: 'Red Zone',
-      data: {'Red'},
-      polygon: <LatLng>[
-        const LatLng(51.44679915203191, 5.458106851466598),
-        const LatLng(51.44754702425743, 5.458841798246701),
-        const LatLng(51.446713244048304, 5.459993281684838),
-        const LatLng(51.44649741675963, 5.459585287867803),
+        const LatLng(51.44798770469571, 5.453609218214037),
+        const LatLng(51.44896434573987, 5.4549214178732495),
+        const LatLng(51.4491214743131, 5.457018905186086),
+        const LatLng(51.4466909356254, 5.460103445605499),
+        const LatLng(51.446106101196065, 5.459479445643427),
       ],
     ),
     PolyGeofence(
@@ -76,25 +63,7 @@ class _GlowAppState extends State<GlowApp> {
   // This function is to be called when the geofence status is changed.
   Future<void> _onPolyGeofenceStatusChanged(PolyGeofence polyGeofence,
       PolyGeofenceStatus polyGeofenceStatus, Location location) async {
-    zoneCounter++;
-    if (polyGeofence.status == PolyGeofenceStatus.ENTER) {
-      _geofenceBloc.add(UpdateGeofenceEvent(polyGeofence.id));
-      zoneCounter = zoneCounter - 1;
-    } else {
-      if (zoneCounter == 3) {
-        _geofenceBloc.add(UpdateGeofenceEvent('black'));
-      }
-    }
-    if (zoneCounter == 4) {
-      zoneCounter = 3;
-      _geofenceBloc.add(UpdateGeofenceEvent('black'));
-    }
-    if (polyGeofence.id == 'Green Zone') {
-      if (zoneCounter == 4) {
-        zoneCounter = 2;
-      }
-      print('Green Zone zoneCounter= ' + zoneCounter.toString());
-    }
+    //notion here...
   }
 
   num _calDistanceInMeter() {
@@ -135,8 +104,20 @@ class _GlowAppState extends State<GlowApp> {
   // This function is to be called when the location has changed.
   void _onLocationChanged(Location location) {
     //New location loaded, reset the offset for the direction
+    UserLocationStatus result = UserLocationStatus.outsideZone;
+    //Inside Red Zone ?
+    if (_polyGeofenceList[0].status.toString() == 'PolyGeofenceStatus.ENTER' ||
+        _polyGeofenceList[0].status.toString() == 'PolyGeofenceStatus.DWELL') {
+      result = UserLocationStatus.insideRedZone;
+    }
+    //Inside Glow Zone ?
+    if (_polyGeofenceList[1].status.toString() == 'PolyGeofenceStatus.ENTER' ||
+        _polyGeofenceList[1].status.toString() == 'PolyGeofenceStatus.ENTER') {
+      result = UserLocationStatus.insideGreenZone;
+    }
     setState(() {
       if (this.mounted) {
+        userLocationStatus = result;
         distance = _calDistanceInMeter();
         _current_Lat = location.latitude;
         _current_Lng = location.longitude;
@@ -176,45 +157,50 @@ class _GlowAppState extends State<GlowApp> {
 
   @override
   Widget build(BuildContext context) {
+    if (userLocationStatus == UserLocationStatus.insideGreenZone) {
+      // if (Lamp.hasLamp != null) {
+      //   Lamp.turnOn();
+      // }
+      return new WillPopScope(
+        onWillPop: () async => false,
+        child: MaterialApp(
+          // A widget used when you want to start a foreground task when trying to minimize or close the app.
+          // Declare on top of the [Scaffold] widget.
+          home: GreenZoneScreen(
+              current_Lat: _current_Lat,
+              current_Lnt: _current_Lng,
+              distance_to_center: distance), // Black Scr
+        ),
+      );
+    }
+    if (userLocationStatus == UserLocationStatus.insideRedZone) {
+      // if (Lamp.hasLamp != null) {
+      //   Lamp.turnOff();
+      // }
+      return new WillPopScope(
+        onWillPop: () async => false,
+        child: MaterialApp(
+          // A widget used when you want to start a foreground task when trying to minimize or close the app.
+          // Declare on top of the [Scaffold] widget.
+          home: RedZoneScreen(
+              current_Lat: _current_Lat,
+              current_Lnt: _current_Lng,
+              distance_to_center: distance), // Black Scr
+        ),
+      );
+    }
+    // if (Lamp.hasLamp != null) {
+    //   Lamp.turnOff();
+    // }
     return new WillPopScope(
       onWillPop: () async => false,
       child: MaterialApp(
         // A widget used when you want to start a foreground task when trying to minimize or close the app.
         // Declare on top of the [Scaffold] widget.
-        home: BlocBuilder(
-            bloc: _geofenceBloc,
-            builder: (context, state) {
-              if (state is CurrentGeofence) {
-                if (state.id == null || state.id == 'black') {
-                  if (Lamp.hasLamp != null) {
-                    Lamp.turnOff();
-                  }
-                  return BlackZoneScreen(
-                      current_Lat: _current_Lat,
-                      current_Lnt: _current_Lng,
-                      distance_to_center: distance); // Black Screen
-                } else if (state.id == 'Green Zone') {
-                  if (Lamp.hasLamp != null) {
-                    Lamp.turnOn();
-                  }
-                  return Stack(children: [
-                    GreenZoneScreen(
-                        current_Lat: _current_Lat,
-                        current_Lnt: _current_Lng,
-                        distance_to_center: distance)
-                  ]);
-                } else {
-                  if (Lamp.hasLamp != null) {
-                    Lamp.turnOff();
-                  }
-                  return RedZoneScreen(
-                      current_Lat: _current_Lat,
-                      current_Lnt: _current_Lng,
-                      distance_to_center: distance);
-                } // Red Screen
-              } else //Error or Empty Screen...
-                return Scaffold();
-            }),
+        home: BlackZoneScreen(
+            current_Lat: _current_Lat,
+            current_Lnt: _current_Lng,
+            distance_to_center: distance), // Black Scr
       ),
     );
   }
@@ -222,7 +208,12 @@ class _GlowAppState extends State<GlowApp> {
   @override
   void dispose() {
     _streamController.close();
-    _geofenceBloc.close();
     super.dispose();
   }
+}
+
+enum UserLocationStatus {
+  outsideZone,
+  insideRedZone,
+  insideGreenZone,
 }

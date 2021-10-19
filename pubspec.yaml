@@ -5,31 +5,33 @@ description: A new Flutter project.
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+7
+version: 1.0.0+5
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  vector_math: any
-  #rxdart: ^0.27.2
-  rxdart: ^0.23.1
-  flutter_bloc: ^7.2.0
+
+  #Poly Geofence
   poly_geofence_service: ^1.4.2
-  #flutter_compass: ^0.7.0
+  #Mobile Compass flutter_compass: ^0.7.0
   flutter_compass: ^0.3.4
+  #Distance Calculation Tools
   maps_toolkit: ^2.0.0
+  vector_math: any
+  #Flash Light
   lamp:
     git:
       url: https://github.com/a805429509/flutter_lamp.git
   permission_handler: ^8.2.5
-
+  #Ripple Effect
+  avatar_glow: 2.0.1
+  #Icon
+  cupertino_icons: ^1.0.2
+  #Location
+  location: any
   flutter:
     sdk: flutter
-  avatar_glow: 2.0.1
-
-  cupertino_icons: ^1.0.2
-  location: any
 
 dev_dependencies:
   flutter_test:

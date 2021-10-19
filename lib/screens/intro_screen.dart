@@ -111,7 +111,7 @@ class _IntroPageState extends State<IntroPage> {
           Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                     image: AssetImage('images/intro_page_v1.png'))),
           ),
           Positioned(
