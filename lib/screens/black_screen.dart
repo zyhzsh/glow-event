@@ -28,7 +28,7 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
       floatingActionButton: IconButton(
         onPressed: () {
           showModalBottomSheet(
-              backgroundColor: Colors.transparent,
+              backgroundColor: Colors.black87,
               isScrollControlled: true,
               context: context,
               builder: (context) => FractionallySizedBox(
