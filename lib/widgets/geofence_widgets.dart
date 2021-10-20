@@ -158,9 +158,9 @@ class _GlowAppState extends State<GlowApp> {
   @override
   Widget build(BuildContext context) {
     if (userLocationStatus == UserLocationStatus.insideGreenZone) {
-      if (Lamp.hasLamp != null) {
-        Lamp.turnOn();
-      }
+      // if (Lamp.hasLamp != null) {
+      //   Lamp.turnOn();
+      // }
       return new WillPopScope(
         onWillPop: () async => false,
         child: MaterialApp(
@@ -174,9 +174,9 @@ class _GlowAppState extends State<GlowApp> {
       );
     }
     if (userLocationStatus == UserLocationStatus.insideRedZone) {
-      if (Lamp.hasLamp != null) {
-        Lamp.turnOff();
-      }
+      // if (Lamp.hasLamp != null) {
+      //   Lamp.turnOff();
+      // }
       return new WillPopScope(
         onWillPop: () async => false,
         child: MaterialApp(
@@ -189,9 +189,9 @@ class _GlowAppState extends State<GlowApp> {
         ),
       );
     }
-    if (Lamp.hasLamp != null) {
-      Lamp.turnOff();
-    }
+    // if (Lamp.hasLamp != null) {
+    //   Lamp.turnOff();
+    // }
     return new WillPopScope(
       onWillPop: () async => false,
       child: MaterialApp(

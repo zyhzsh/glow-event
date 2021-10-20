@@ -35,10 +35,7 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                       ),
                     ));
           },
-          icon: Icon(
-            Icons.info_outlined,
-            color: Colors.white,
-          ),
+          icon: Image.asset('images/information_icon.png'),
         ),
         body: Center(
           child: Container(
@@ -206,7 +203,7 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                         //     BoxDecoration(color: Colors.black.withOpacity(0.5)),
                         child: Text(
                           'Gefeliciteerd! \n\n'
-                              'je staat in de groene voetafdruk!',
+                          'je staat in de groene voetafdruk!',
                           textAlign: TextAlign.center,
                           style: new TextStyle(
                               color: Colors.white,

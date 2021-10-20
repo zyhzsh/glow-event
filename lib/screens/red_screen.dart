@@ -37,10 +37,7 @@ class _RedZoneScreenState extends State<RedZoneScreen> {
                     ),
                   ));
         },
-        icon: Icon(
-          Icons.info_outlined,
-          color: Colors.white,
-        ),
+        icon: Image.asset('images/information_icon.png'),
       ),
 
       //Back - up Options

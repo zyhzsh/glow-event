@@ -38,10 +38,7 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
                     ),
                   ));
         },
-        icon: Icon(
-          Icons.info_outlined,
-          color: Colors.white,
-        ),
+        icon: Image.asset('images/information_icon.png'),
       ),
       body: Center(
         child: Container(
