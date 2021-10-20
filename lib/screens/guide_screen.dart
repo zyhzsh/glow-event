@@ -34,10 +34,8 @@ class _GuidePageState extends State<GuidePage> {
                     bottomRight: Radius.circular(22.0),
                     bottomLeft: Radius.circular(22.0)),
                 image: DecorationImage(
-                    colorFilter: ColorFilter.mode(
-                        Colors.black.withOpacity(0.4), BlendMode.darken),
-                    fit: BoxFit.cover,
-                    image: AssetImage('images/foot-print-background-v2.JPG'))),
+                    fit: BoxFit.fill,
+                    image: AssetImage('images/guide-page.png'))),
           ),
           Stack(
             children: [
