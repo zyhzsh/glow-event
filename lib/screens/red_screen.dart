@@ -92,7 +92,7 @@ class _RedZoneScreenState extends State<RedZoneScreen> {
                     wordSpacing: 1,
                     fontFamily: 'Montserrat'),
               ),
-              SizedBox(width: 10.0, height: HYSizeFit.setRpx(30)),
+              SizedBox(width: 10.0, height: HYSizeFit.setRpx(100)),
               Tracker(
                 color: Colors.white,
                 frequency: 1000,

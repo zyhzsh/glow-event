@@ -117,7 +117,7 @@ class _CompassState extends State<Compass> {
       angle: _heading,
       child: Center(
           child: Container(
-        height: HYSizeFit.setHeight(10),
+        height: 120,
         child: Image.asset('images/w-footprint.png'),
       )),
     ));

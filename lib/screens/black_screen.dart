@@ -38,7 +38,11 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
                     ),
                   ));
         },
-        icon: Image.asset('images/information_icon.png'),
+        icon: Image.asset(
+          'images/information_icon.png',
+          height: 200,
+          width: 200,
+        ),
       ),
       body: Center(
         child: Container(
@@ -72,7 +76,7 @@ class _BlackZoneScreenState extends State<BlackZoneScreen> {
                     wordSpacing: 1,
                     fontFamily: 'Montserrat'),
               ),
-              SizedBox(width: 10.0, height: HYSizeFit.setRpx(30)),
+              SizedBox(width: 10.0, height: HYSizeFit.setRpx(100)),
               Tracker(
                 color: Colors.white,
                 frequency: 10000,
