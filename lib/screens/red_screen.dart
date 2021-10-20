@@ -31,7 +31,7 @@ class _RedZoneScreenState extends State<RedZoneScreen> {
               isScrollControlled: true,
               context: context,
               builder: (context) => FractionallySizedBox(
-                    heightFactor: 0.8,
+                    heightFactor: 0.92,
                     child: Information(
                       content: 'Red',
                     ),

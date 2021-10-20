@@ -29,7 +29,7 @@ class _GreenZoneScreenState extends State<GreenZoneScreen> {
                 isScrollControlled: true,
                 context: context,
                 builder: (context) => FractionallySizedBox(
-                      heightFactor: 0.8,
+                      heightFactor: 0.92,
                       child: Information(
                         content: 'Green',
                       ),
