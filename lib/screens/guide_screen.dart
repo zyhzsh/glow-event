@@ -55,7 +55,7 @@ class _GuidePageState extends State<GuidePage> {
                 ),
               ),
               Positioned(
-                top: HYSizeFit.setHeight(9),
+                top: HYSizeFit.setHeight(8.4),
                 left: HYSizeFit.setWidth(50),
                 child: Container(
                   child: Text('Om zo',
@@ -88,7 +88,7 @@ class _GuidePageState extends State<GuidePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: HYSizeFit.setHeight(40)),
+                        padding: EdgeInsets.only(top: HYSizeFit.setHeight(30)),
                         child: Text('Uw gegevens',
                             style: TextStyle(
                                 color: Colors.black,
