@@ -1,9 +1,7 @@
 import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
-import 'package:glow2021v1/tools/resize_tool.dart';
 import 'package:vector_math/vector_math.dart' as cal;
 
 class Tracker extends StatefulWidget {
