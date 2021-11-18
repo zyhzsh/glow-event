@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
+import 'package:glow2021v1/InitialData.dart';
 import 'package:vector_math/vector_math.dart' as cal;
 
 class Tracker extends StatefulWidget {
@@ -35,17 +36,11 @@ class _TrackerState extends State<Tracker> {
 class Compass extends StatefulWidget {
   double current_lat;
   double current_lng;
-  final double center_Lat;
-  final double center_Lng;
-  // Green Zone Center : 51.447717, 5.456978
-  Compass(
-      {Key? key,
-      this.current_lat = 0,
-      this.current_lng = 0,
-      //Green Center Location
-      this.center_Lat = 51.447717,
-      this.center_Lng = 5.456978})
-      : super(key: key);
+  Compass({
+    Key? key,
+    this.current_lat = 0,
+    this.current_lng = 0,
+  }) : super(key: key);
   @override
   _CompassState createState() => _CompassState();
 }
@@ -99,7 +94,7 @@ class _CompassState extends State<Compass> {
 
   void _onData(double x) {
     var offset = getOffsetFromNorth(widget.current_lat, widget.current_lng,
-        widget.center_Lat, widget.center_Lng);
+        InitialData.initial_Lat, InitialData.initial_Lng);
     var offsetAngle = -2 * pi * (x - offset) / 360;
     if (this.mounted) {
       setState(() {

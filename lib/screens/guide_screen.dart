@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:glow2021v1/tools/resize_tool.dart';
 import 'package:glow2021v1/widgets/geofence_widgets.dart';
+import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../InitialData.dart';
 
 class GuidePage extends StatefulWidget {
   @override
@@ -166,6 +168,7 @@ class _GuidePageState extends State<GuidePage> {
   _openGlowApp(BuildContext context) async {
     var location_permission = await Permission.location.status;
     var flash_light = await Permission.camera.status;
+    Location location = new Location();
     if (location_permission.isDenied ||
         flash_light.isDenied ||
         location_permission.isPermanentlyDenied ||
@@ -178,6 +181,9 @@ class _GuidePageState extends State<GuidePage> {
     location_permission = await Permission.location.status;
     flash_light = await Permission.camera.status;
     if (location_permission.isGranted && flash_light.isGranted) {
+      LocationData _locationData = await location.getLocation();
+      InitialData.initializeLocationData(_locationData.latitude!.toDouble(),
+          _locationData.longitude!.toDouble());
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => new GlowApp()));
     }
