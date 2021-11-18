@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:geofence_service/geofence_service.dart';
+import 'package:geofence_service/models/geofence.dart';
 import 'package:glow2021v1/screens/black_screen.dart';
 import 'package:glow2021v1/screens/green_screen.dart';
 import 'package:glow2021v1/screens/red_screen.dart';
 import 'package:lamp/lamp.dart';
 import 'package:maps_toolkit/maps_toolkit.dart' as distanceUtil;
-import 'package:poly_geofence_service/poly_geofence_service.dart';
 
 class GlowApp extends StatefulWidget {
   @override
@@ -19,125 +20,102 @@ class _GlowAppState extends State<GlowApp> {
 
   double _current_Lat = 0;
   double _current_Lng = 0;
+
+  //Center Location
+
+  static double _center_Lat = 1.1;
+  static double _center_Lng = 1.1;
+
   //Distance tracker
   num distance = 0;
-  UserLocationStatus userLocationStatus = UserLocationStatus.outsideZone;
 
-  final _streamController = StreamController<PolyGeofence>();
+  UserLocationStatus userLocationStatus = UserLocationStatus.insideGreenZone;
 
-  // Create a [PolyGeofenceService] instance and set options.
-  final _polyGeofenceService = PolyGeofenceService.instance.setup(
-      interval: 500, // Time interval to check geofence status
-      accuracy: 20, // geofencing error range in meters
-      loiteringDelayMs: 6000000,
-      statusChangeDelayMs: 1000,
+  final _streamController = StreamController<Geofence>();
+
+// Create a [GeofenceService] instance and set options.
+  final _geofenceService = GeofenceService.instance.setup(
+      interval: 5000,
+      accuracy: 100,
+      loiteringDelayMs: 60000,
+      statusChangeDelayMs: 10000,
+      useActivityRecognition: true,
       allowMockLocations: false,
-      printDevLog: false);
-  int zoneCounter = 0;
-  // Create a [PolyGeofence] list.
-  final _polyGeofenceList = <PolyGeofence>[
-    PolyGeofence(
-      id: 'Red Zone',
-      data: {'Red'},
-      polygon: <LatLng>[
-        const LatLng(51.44798770469571, 5.453609218214037),
-        const LatLng(51.44896434573987, 5.4549214178732495),
-        const LatLng(51.4491214743131, 5.457018905186086),
-        const LatLng(51.4466909356254, 5.460103445605499),
-        const LatLng(51.446106101196065, 5.459479445643427),
+      printDevLog: false,
+      geofenceRadiusSortType: GeofenceRadiusSortType.DESC);
+  // Create a [Geofence] list.
+  final _geofenceList = <Geofence>[
+    Geofence(
+      id: 'RedZone',
+      latitude: _center_Lat,
+      longitude: _center_Lng,
+      radius: [
+        GeofenceRadius(id: 'red_zone_radius_126m', length: 126.16),
       ],
     ),
-    PolyGeofence(
-      id: 'Green Zone',
-      data: {'Green'},
-      polygon: <LatLng>[
-        const LatLng(51.447409255917215, 5.456023922597575),
-        const LatLng(51.44849455555152, 5.456986835626296),
-        const LatLng(51.44865168574167, 5.457440128912996),
-        const LatLng(51.44764704614813, 5.458722224779638),
-        const LatLng(51.44691152228507, 5.458016803854036),
+    Geofence(
+      id: 'GreenZone',
+      latitude: _center_Lat,
+      longitude: _center_Lng,
+      radius: [
+        GeofenceRadius(id: 'green_zone_radius_71m', length: 71.36),
       ],
     ),
   ];
 
   // This function is to be called when the geofence status is changed.
-  Future<void> _onPolyGeofenceStatusChanged(PolyGeofence polyGeofence,
-      PolyGeofenceStatus polyGeofenceStatus, Location location) async {
+  Future<void> _onGeofenceStatusChanged(Geofence polyGeofence,
+      GeofenceStatus polyGeofenceStatus, Location location) async {
     //notion here...
   }
 
+  // Calculate distance between between geolocation
   num _calDistanceInMeter() {
-    num edge_line_1 = distanceUtil.PolygonUtil.distanceToLine(
-      distanceUtil.LatLng(_current_Lat, _current_Lng),
-      distanceUtil.LatLng(51.447409255917215, 5.456023922597575),
-      distanceUtil.LatLng(51.44849455555152, 5.456986835626296),
-    );
-    num edge_line_2 = distanceUtil.PolygonUtil.distanceToLine(
-      distanceUtil.LatLng(_current_Lat, _current_Lng),
-      distanceUtil.LatLng(51.44849455555152, 5.456986835626296),
-      distanceUtil.LatLng(51.44865168574167, 5.457440128912996),
-    );
-    num edge_line_3 = distanceUtil.PolygonUtil.distanceToLine(
-      distanceUtil.LatLng(_current_Lat, _current_Lng),
-      distanceUtil.LatLng(51.44865168574167, 5.457440128912996),
-      distanceUtil.LatLng(51.44764704614813, 5.458722224779638),
-    );
-    num edge_line_4 = distanceUtil.PolygonUtil.distanceToLine(
-      distanceUtil.LatLng(_current_Lat, _current_Lng),
-      distanceUtil.LatLng(51.44764704614813, 5.458722224779638),
-      distanceUtil.LatLng(51.44691152228507, 5.458016803854036),
-    );
-    num edge_line_5 = distanceUtil.PolygonUtil.distanceToLine(
-        distanceUtil.LatLng(_current_Lat, _current_Lng),
-        distanceUtil.LatLng(51.44691152228507, 5.458016803854036),
-        distanceUtil.LatLng(51.447409255917215, 5.456023922597575));
-    num result = [
-      edge_line_1,
-      edge_line_2,
-      edge_line_3,
-      edge_line_4,
-      edge_line_5
-    ].reduce(min);
-    return result;
+    num distanceBetweenPoints =
+        distanceUtil.SphericalUtil.computeDistanceBetween(
+            distanceUtil.LatLng(_current_Lat, _current_Lng),
+            distanceUtil.LatLng(_center_Lat, _center_Lng));
+    return distanceBetweenPoints;
   }
 
-  // This function is to be called when the location has changed.
+//This function is to be called when the location has changed.
   void _onLocationChanged(Location location) {
     //New location loaded, reset the offset for the direction
     UserLocationStatus result = UserLocationStatus.outsideZone;
     //Inside Red Zone ?
-    if (_polyGeofenceList[0].status.toString() == 'PolyGeofenceStatus.ENTER' ||
-        _polyGeofenceList[0].status.toString() == 'PolyGeofenceStatus.DWELL') {
+    if (_geofenceList[0].status.toString() == 'PolyGeofenceStatus.ENTER' ||
+        _geofenceList[0].status.toString() == 'PolyGeofenceStatus.DWELL') {
       result = UserLocationStatus.insideRedZone;
     }
-    //Inside Glow Zone ?
-    if (_polyGeofenceList[1].status.toString() == 'PolyGeofenceStatus.ENTER' ||
-        _polyGeofenceList[1].status.toString() == 'PolyGeofenceStatus.DWELL') {
+    //Inside Green Zone ?
+    if (_geofenceList[1].status.toString() == 'PolyGeofenceStatus.ENTER' ||
+        _geofenceList[1].status.toString() == 'PolyGeofenceStatus.DWELL') {
       result = UserLocationStatus.insideGreenZone;
     }
     setState(() {
       if (this.mounted) {
         userLocationStatus = result;
-        distance = _calDistanceInMeter();
         _current_Lat = location.latitude;
         _current_Lng = location.longitude;
+        distance = _calDistanceInMeter();
       }
     });
   }
 
-  // This function is to be called when a location services status change occurs
-  // since the service was started.
+// This function is to be called when a location services status change occurs
+// since the service was started.
   void _onLocationServicesStatusChanged(bool status) {
     print('isLocationServicesEnabled: $status');
   }
 
-  // This function is used to handle errors that occur in the service.
+// This function is used to handle errors that occur in the service.
   void _onError(error) {
     final errorCode = getErrorCodesFromError(error);
     if (errorCode == null) {
       print('Undefined error: $error');
       return;
     }
+
     print('ErrorCode: $errorCode');
   }
 
@@ -145,15 +123,67 @@ class _GlowAppState extends State<GlowApp> {
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback((_) {
-      _polyGeofenceService
-          .addPolyGeofenceStatusChangeListener(_onPolyGeofenceStatusChanged);
-      _polyGeofenceService.addLocationChangeListener(_onLocationChanged);
-      _polyGeofenceService.addLocationServicesStatusChangeListener(
+      _geofenceService.addLocationChangeListener(_onLocationChanged);
+      _geofenceService.addLocationServicesStatusChangeListener(
           _onLocationServicesStatusChanged);
-      _polyGeofenceService.addStreamErrorListener(_onError);
-      _polyGeofenceService.start(_polyGeofenceList).catchError(_onError);
+      _geofenceService.addStreamErrorListener(_onError);
+      _geofenceService.start(_geofenceList).catchError(_onError);
     });
   }
+
+  // // This function is to be called when the location has changed.
+  // void _onLocationChanged(Location location) {
+  //   //New location loaded, reset the offset for the direction
+  //   UserLocationStatus result = UserLocationStatus.outsideZone;
+  //   //Inside Red Zone ?
+  //   if (_polyGeofenceList[0].status.toString() == 'PolyGeofenceStatus.ENTER' ||
+  //       _polyGeofenceList[0].status.toString() == 'PolyGeofenceStatus.DWELL') {
+  //     result = UserLocationStatus.insideRedZone;
+  //   }
+  //   //Inside Glow Zone ?
+  //   if (_polyGeofenceList[1].status.toString() == 'PolyGeofenceStatus.ENTER' ||
+  //       _polyGeofenceList[1].status.toString() == 'PolyGeofenceStatus.DWELL') {
+  //     result = UserLocationStatus.insideGreenZone;
+  //   }
+  //   setState(() {
+  //     if (this.mounted) {
+  //       userLocationStatus = result;
+  //       distance = _calDistanceInMeter();
+  //       _current_Lat = location.latitude;
+  //       _current_Lng = location.longitude;
+  //     }
+  //   });
+  // }
+  //
+  // // This function is to be called when a location services status change occurs
+  // // since the service was started.
+  // void _onLocationServicesStatusChanged(bool status) {
+  //   print('isLocationServicesEnabled: $status');
+  // }
+  //
+  // // This function is used to handle errors that occur in the service.
+  // void _onError(error) {
+  //   final errorCode = getErrorCodesFromError(error);
+  //   if (errorCode == null) {
+  //     print('Undefined error: $error');
+  //     return;
+  //   }
+  //   print('ErrorCode: $errorCode');
+  // }
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance?.addPostFrameCallback((_) {
+  //     _polyGeofenceService
+  //         .addPolyGeofenceStatusChangeListener(_onPolyGeofenceStatusChanged);
+  //     _polyGeofenceService.addLocationChangeListener(_onLocationChanged);
+  //     _polyGeofenceService.addLocationServicesStatusChangeListener(
+  //         _onLocationServicesStatusChanged);
+  //     _polyGeofenceService.addStreamErrorListener(_onError);
+  //     _polyGeofenceService.start(_polyGeofenceList).catchError(_onError);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
